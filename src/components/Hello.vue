@@ -1,53 +1,44 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-      <br>
-      <li><a href="http://vuejs-templates.github.io/webpack/" target="_blank">Docs for This Template</a></li>
-    </ul>
-    <h2>Ecosystem</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
+  <div class="tab">
+      <div class="tab-item">
+        <router-link to="/index">首页</router-link>
+      </div>
+      <div class="tab-item">
+        详情
+      </div>
+      <div class="tab-item">
+        其他
+      </div>
+       <router-view></router-view>
   </div>
 </template>
 
 <script>
+  import detail from './detail'
+  import Vue from 'vue'
+  import vueRouter from 'vue-router'
+  Vue.use(vueRouter)
 export default {
   name: 'hello',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
-  }
+  components: { detail }
 }
+const routes = [
+  { path: '/detail', component: detail }
+]
+const router = new vueRouter ({
+   'routes': routes
+})
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
+<style>
+  .tab{
+    display:flex;
+    height:40px;
+    line-height:40px;
+    background:deepskyblue;
+  }
+  .tab-item{
+    flex:1;
+    text-align:center;
+  }
 </style>

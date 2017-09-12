@@ -1,14 +1,16 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
-    <router-view></router-view>
+    <hello></hello>
+
   </div>
 </template>
 
 <script>
-export default {
-  name: 'app'
-}
+  import hello from './components/Hello'
+  export default {
+    name: 'app',
+    components: { hello }
+  }
 </script>
 
 <style>
