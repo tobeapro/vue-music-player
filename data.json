@@ -1,0 +1,7 @@
+{
+  "dataList":[
+    { "goods": "手机", "price": 1000 },
+    { "goods": "电脑", "price": 5000 },
+    { "goods": "充电器", "price": 100 }
+  ]
+}

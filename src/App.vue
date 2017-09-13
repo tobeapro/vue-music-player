@@ -1,15 +1,23 @@
 <template>
   <div id="app">
-    <hello></hello>
-
+    <div class="tab">
+      <div class="tab-item">
+        <router-link to="/">首页</router-link>
+      </div>
+      <div class="tab-item">
+        <router-link to="/detail">详情</router-link>
+      </div>
+      <div class="tab-item">
+        <router-link to="/others">其他</router-link>
+      </div>
+    </div>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-  import hello from './components/Hello'
   export default {
-    name: 'app',
-    components: { hello }
+    name: 'app'
   }
 </script>
 
@@ -18,8 +26,16 @@
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
   margin-top: 60px;
+}
+.tab{
+  display:flex;
+  height:40px;
+  line-height:40px;
+  background:deepskyblue;
+}
+.tab-item{
+  flex:1;
+  text-align:center;
 }
 </style>
