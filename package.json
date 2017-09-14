@@ -13,6 +13,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "element-ui": "^1.4.4",
+    "mongoose": "^4.11.11",
     "vue": "^2.4.2",
     "vue-router": "^2.7.0"
   },

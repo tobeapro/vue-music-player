@@ -37,7 +37,7 @@ export default{
     }
   },
   created: function () {
-    axios.get('/data.json')
+    axios.get('../api')
       .then(function (res) {
         console.log(res)
       })
