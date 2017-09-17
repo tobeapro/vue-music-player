@@ -1,5 +1,5 @@
 <template>
-  <div id="hello" class="hello">
+  <div id="home" class="home">
      hello
     <router-link to="/helloLink">hello-link</router-link>
     <router-view></router-view>
@@ -19,7 +19,7 @@
 </script>
 
 <style>
-  .hello{
+  .home{
     text-align: center;
   }
 </style>

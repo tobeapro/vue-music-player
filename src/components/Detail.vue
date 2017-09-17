@@ -20,31 +20,11 @@
 </template>
 
 <script>
-  import Vue from 'vue'
-  import axios from 'axios'
-  import elementUi from 'element-ui'
-  import 'element-ui/lib/theme-default/index.css'
-  Vue.use(elementUi)
 export default{
   name: 'detail',
-  data: function () {
-    return {
-      dataList: [
-        { 'goods': '手机', 'price': 1000 },
-        { 'goods': '电脑', 'price': 5000 },
-        { 'goods': '充电器', 'price': 100 }
-      ]
-    }
-  },
-  created: function () {
-    axios.get('../api')
-      .then(function (res) {
-        console.log(res)
-      })
-      .catch(function (res) {
-        console.log(res)
-      })
-  },
+  props: { 'dataList': {
+    type: Array
+  }},
   filters: {
     priceFilter: function (val) {
       return '¥' + ' ' + val
@@ -54,6 +34,5 @@ export default{
 </script>
 
 <style>
-
 
 </style>
