@@ -20,11 +20,25 @@
 </template>
 
 <script>
+  import Vue from 'vue'
+  import axios from 'axios'
+  Vue.use(axios)
 export default{
   name: 'detail',
-  props: { 'dataList': {
-    type: Array
-  }},
+  data: function () {
+    return {
+      dataList: []
+    }
+  },
+  created: function () {
+    axios.get('/api/detail')
+      .then((res) => {
+        this.dataList = res.data.data
+      })
+      .catch((res) => {
+        console.log(res)
+      })
+  },
   filters: {
     priceFilter: function (val) {
       return '¥' + ' ' + val

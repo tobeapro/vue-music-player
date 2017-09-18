@@ -11,9 +11,11 @@ Vue.use(axios)
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-new Vue({
+export default new Vue({
   el: '#app',
   router,
+  elementUi,
+  axios,
   template: '<App/>',
   components: { App }
 })

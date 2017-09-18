@@ -3,5 +3,12 @@
     { "goods": "手机", "price": 1000 },
     { "goods": "电脑", "price": 5000 },
     { "goods": "充电器", "price": 100 }
+  ],
+  "userInfo":{
+    "userName":"admin",
+    "userIcon":"http://tvax3.sinaimg.cn/crop.0.12.750.750.180/842fbb6cly8fig9meyg1nj20ku0ligmw.jpg"
+  },
+  "musicList":[
+    {"singer":"周杰伦","song":"七里香","img":"","lrc":""}
   ]
 }

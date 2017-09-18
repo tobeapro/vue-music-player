@@ -12,46 +12,70 @@
         <router-link to="/others">其他</router-link>
       </div>
     </div>
-    <router-view :dataList="dataList"></router-view>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
   import header from '@/components/header'
+  import Vue from 'vue'
+  import axios from 'axios'
+  Vue.use(axios)
   export default {
     name: 'app',
     data: function () {
       return {
-        dataList: [
-          { 'goods': '手机', 'price': 1000 },
-          { 'goods': '电脑', 'price': 5000 },
-          { 'goods': '充电器', 'price': 100 }
-        ],
         userInfo: {
-          userName: 'admin',
-          userIcon: 'http://p1.music.126.net/v1jAfoHp37fPZf7uqoQulQ==/109951162999971756.jpg?param=180y180'
+          userName: '',
+          userIcon: ''
         }
       }
     },
-    components:{
-      'v-header':header
+    created: function () {
+      axios.get('/api')
+        .then((res) => {
+          this.userInfo = res.data.data
+        })
+        .catch((res) => {
+          console.log(res)
+        })
+    },
+    components: {
+      'v-header': header
     }
   }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+html,body,div,span,
+applet,object,iframe,
+h1,h2,h3,h4,h5,h6,p,blockquote,pre,
+a,abbr,acronym,address,big,cite,code,
+del,dfn,em,font,img,ins,kbd,q,s,samp,
+small,strike,strong,sub,sup,tt,var,
+dd,dl,dt,li,ol,ul,
+fieldset,form,label,legend,select,
+table,caption,tbody,tfoot,thead,tr,th,td,input,button,i,span{
+  margin:0;
+  padding:0;
+  border:0;
+}
+body{font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  margin-top: 20px;
 }
-a{
-  text-decoration: none;
-  color:#000;
-}
-a.router-link-exact-active{
-  color:indianred;
+input,button,textarea,td,th,select{outline:none;}
+table {border-collapse:collapse;border-spacing:0;}
+ol,ul{list-style: none;}
+a{text-decoration:none;}
+a:hover{text-decoration:none;cursor:pointer;}
+.fl{float:left;}
+.fr{float:right;}
+.clearFloat:after{content:"";display:block;clear:both;}
+.clearFloat{zoom:1;}
+input[disabled], select[disabled]{
+  background: #f9fafc !important;
+  cursor: not-allowed !important;
 }
 .app .tab{
   display:flex;
@@ -64,5 +88,12 @@ a.router-link-exact-active{
 .app .tab-item{
   flex:1;
   text-align:center;
+  border-bottom:2px solid #dc0000;
+}
+.app .tab-item a{
+  color:#000;
+}
+.app .tab-item a.router-link-exact-active{
+  color:indianred;
 }
 </style>

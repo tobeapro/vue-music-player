@@ -88,3 +88,20 @@ module.exports = {
     server.close()
   }
 }
+
+//请求本地数据
+var appData=require('../data.json');
+var apiRoutes=express.Router();
+apiRoutes.get('',function(req,res){
+  res.json({
+    errno: 0,
+    data:appData.userInfo
+  })
+})
+apiRoutes.get('/detail',function(req,res){
+  res.json({
+    errno: 0,
+    data:appData.dataList
+  })
+})
+app.use('/api',apiRoutes)
