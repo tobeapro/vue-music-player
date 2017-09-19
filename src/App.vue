@@ -1,17 +1,18 @@
 <template>
-  <div id="app" class="app" >
+  <div id="app" class="app">
     <v-header :user="userInfo"></v-header>
     <div class="tab">
       <div class="tab-item">
-        <router-link to="/">首页</router-link>
+        <router-link to="/" @click.native="selectItem(0)">首页</router-link>
       </div>
       <div class="tab-item">
-        <router-link to="/detail">详情</router-link>
+        <router-link to="/detail" @click.native="selectItem(100)">详情</router-link>
       </div>
       <div class="tab-item">
-        <router-link to="/others">其他</router-link>
+        <router-link to="/others" @click.native="selectItem(200)">其他</router-link>
       </div>
     </div>
+    <div class="chosen-item" :style="{transform:'translateX('+itemPosition+')'}"></div>
     <router-view></router-view>
   </div>
 </template>
@@ -28,7 +29,8 @@
         userInfo: {
           userName: '',
           userIcon: ''
-        }
+        },
+        itemPosition: 0
       }
     },
     created: function () {
@@ -42,6 +44,11 @@
     },
     components: {
       'v-header': header
+    },
+    methods: {
+      selectItem: function (e) {
+        this.itemPosition = e + '%'
+      }
     }
   }
 </script>
@@ -79,21 +86,29 @@ input[disabled], select[disabled]{
 }
 .app .tab{
   display:flex;
+  margin-bottom:2px;
   height:40px;
   line-height:40px;
-  font-size:16px;
+  font-size:14px;
   font-weight:bold;
   background:#fff;
 }
 .app .tab-item{
   flex:1;
   text-align:center;
-  border-bottom:2px solid #dc0000;
 }
 .app .tab-item a{
+  display:inline-block;
+  width:100%;
   color:#000;
+  letter-spacing: 2px;
 }
 .app .tab-item a.router-link-exact-active{
   color:indianred;
+}
+.app .chosen-item{
+  width:33.3%;
+  transition: .4s;
+  border-bottom:3px solid #dc0000;
 }
 </style>
