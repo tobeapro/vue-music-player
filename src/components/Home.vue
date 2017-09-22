@@ -1,9 +1,7 @@
-<template>
-  <div id="home" class="home">
-     hello
-    <router-link to="/helloLink">hello-link</router-link>
-    <router-view></router-view>
-  </div>
+<template lang="pug">
+  div(id="home",class="home") hello
+    router-link(to="/helloLink") hello-link2
+    router-view
 </template>
 
 <script>

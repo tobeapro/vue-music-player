@@ -1,39 +1,34 @@
-<template>
-  <el-table
-    :data="dataList"
-    style="width: 100%">
-    <el-table-column
-      type="index"
-      width="80px">
-    </el-table-column>
-    <el-table-column
-      prop="goods"
-      label="商品">
-    </el-table-column>
-    <el-table-column
-      label="价格">
-      <template scope="scope">
-        <span>{{scope.row.price|priceFilter}}</span>
-      </template>
-    </el-table-column>
-  </el-table>
+<template lang="pug">
+  Table(:columns="columns1",:data="dataList")
 </template>
 
 <script>
-  import Vue from 'vue'
-  import axios from 'axios'
-  Vue.use(axios)
 export default{
   name: 'detail',
   data: function () {
     return {
+      columns1: [
+        {
+          type: 'index',
+          align: 'center'
+        },
+        {
+          title: '商品',
+          key: 'goods'
+        },
+        {
+          title: '价格',
+          key: 'price'
+        }
+      ],
       dataList: []
     }
   },
   created: function () {
-    axios.get('/api/detail')
+    this.$http.get('/api/detail')
       .then((res) => {
         this.dataList = res.data.data
+        console.log(this.$store.getters.getCount)
       })
       .catch((res) => {
         console.log(res)

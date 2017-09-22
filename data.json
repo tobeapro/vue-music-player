@@ -6,7 +6,7 @@
   ],
   "userInfo":{
     "userName":"admin",
-    "userIcon":"http://tvax3.sinaimg.cn/crop.0.12.750.750.180/842fbb6cly8fig9meyg1nj20ku0ligmw.jpg"
+    "userIcon":"../../static/user.png"
   },
   "musicList":[
     {"singer":"周杰伦","song":"七里香","img":"","lrc":""}

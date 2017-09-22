@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="app">
+  <div class="app">
     <v-header :user="userInfo"></v-header>
     <div class="tab">
       <div class="tab-item">
@@ -11,8 +11,8 @@
       <div class="tab-item">
         <router-link to="/others" @click.native="selectItem(200)">其他</router-link>
       </div>
+      <div class="chosen-item" :style="{transform:'translateX('+itemPosition+')'}"></div>
     </div>
-    <div class="chosen-item" :style="{transform:'translateX('+itemPosition+')'}"></div>
     <router-view></router-view>
   </div>
 </template>
@@ -20,8 +20,8 @@
 <script>
   import header from '@/components/header'
   import Vue from 'vue'
-  import axios from 'axios'
-  Vue.use(axios)
+  import Vuex from 'vuex'
+  Vue.use(Vuex)
   export default {
     name: 'app',
     data: function () {
@@ -34,7 +34,14 @@
       }
     },
     created: function () {
-      axios.get('/api')
+      if (window.location.hash === '#/') {
+          this.itemPosition = 0
+      } else if (window.location.hash === '#/detail') {
+          this.itemPosition = 100 + '%'
+      } else if (window.location.hash === '#/others') {
+          this.itemPosition = 200 + '%'
+      }
+      this.$http.get('/api')
         .then((res) => {
           this.userInfo = res.data.data
         })
@@ -67,9 +74,10 @@ table,caption,tbody,tfoot,thead,tr,th,td,input,button,i,span{
   padding:0;
   border:0;
 }
-body{font-family: 'Avenir', Helvetica, Arial, sans-serif;
+html,body{font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", "Microsoft Yahei", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height:100%;
 }
 input,button,textarea,td,th,select{outline:none;}
 table {border-collapse:collapse;border-spacing:0;}
@@ -86,7 +94,7 @@ input[disabled], select[disabled]{
 }
 .app .tab{
   display:flex;
-  margin-bottom:2px;
+  position:relative;
   height:40px;
   line-height:40px;
   font-size:14px;
@@ -107,6 +115,9 @@ input[disabled], select[disabled]{
   color:indianred;
 }
 .app .chosen-item{
+  position: absolute;
+  bottom:0;
+  left:0;
   width:33.3%;
   transition: .4s;
   border-bottom:3px solid #dc0000;

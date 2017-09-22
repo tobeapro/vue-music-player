@@ -4,18 +4,40 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
-import elementUi from 'element-ui'
-import 'element-ui/lib/theme-default/index.css'
-Vue.use(elementUi)
+import iview from 'iview'
+import 'iview/dist/styles/iview.css'
+import Vuex from 'vuex'
+Vue.use(Vuex)
+Vue.use(iview)
 Vue.use(axios)
 Vue.config.productionTip = false
-
+Vue.prototype.$http = axios
 /* eslint-disable no-new */
 export default new Vue({
   el: '#app',
   router,
-  elementUi,
   axios,
+  store,
+  iview,
   template: '<App/>',
   components: { App }
 })
+const store = new Vuex.Store({
+  state: {
+    count: 1
+  },
+  mutations: {
+    Count (state, platform) {
+      state.count = platform
+    }
+  },
+  actions: {
+    setCount ({commit}, platform) {
+      commit('Count', platform)
+    }
+  },
+  getters: {
+    getCount: (state) => state.count
+  }
+})
+

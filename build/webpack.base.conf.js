@@ -37,6 +37,14 @@ module.exports = {
       //   }
       // },
       {
+        test: /\.scss$/,
+        loader: 'style!css!sass?sourceMap'
+      },
+      {
+        test: /\.pug$/,
+        loader: 'pug'
+      },
+      {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: vueLoaderConfig
