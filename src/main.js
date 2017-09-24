@@ -11,7 +11,7 @@ Vue.use(Vuex)
 Vue.use(iview)
 Vue.use(axios)
 Vue.config.productionTip = false
-Vue.prototype.$http = axios
+Vue.prototype.$axios = axios
 /* eslint-disable no-new */
 export default new Vue({
   el: '#app',

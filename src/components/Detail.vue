@@ -1,5 +1,6 @@
 <template lang="pug">
   Table(:columns="columns1",:data="dataList")
+
 </template>
 
 <script>
@@ -21,11 +22,30 @@ export default{
           key: 'price'
         }
       ],
-      dataList: []
+      columns2: [
+        {
+          type: 'index',
+          align: 'center'
+        },
+        {
+          title: '歌名',
+          key: 'name'
+        },
+        {
+          title: 'id',
+          key: 'songid'
+        },
+        {
+          title: '歌手',
+          key: 'singer'
+        }
+      ],
+      dataList: [],
+      dataList2: []
     }
   },
   created: function () {
-    this.$http.get('/api/detail')
+    this.$axios.get('/api/detail')
       .then((res) => {
         this.dataList = res.data.data
         console.log(this.$store.getters.getCount)
@@ -33,6 +53,12 @@ export default{
       .catch((res) => {
         console.log(res)
       })
+  },
+  methods: {
+    songlist: function (val) {
+      this.dataList2 = val
+      console.log(val)
+    }
   },
   filters: {
     priceFilter: function (val) {

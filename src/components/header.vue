@@ -18,6 +18,7 @@
 </template>
 
 <script>
+  import jsonp from 'jsonp'
   export default{
     name: 'header',
     data () {
@@ -31,20 +32,27 @@
       }
     },
     methods: {
-      search:function() {
-        this.$http.get("https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp?format=jsonp&n=20&w=" + this.search_content + "", {
-            dataType:'jsonp',
-            jsonp:"jsonpCallback"
-        })
-        .then((res) => {
-            console.log(res)
-        })
-        .catch((res) => {
-          console.log(res)
-        })
-      },
-      jsonpCallback: function () {
-        console.log(2)
+      search: function () {
+          jsonp(
+            'https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp?format=jsonp&n=20&w=' + this.search_content + '', {
+              jsonp: 'callback'
+            }).then(res => {
+            if (res.body.data.song.list !== []) {
+              this.hotListState = false
+              this.searchListState = true
+              this.searchList = []
+              res.body.data.song.list.forEach(val => {
+                this.searchList.push({
+                  name: val.songname,
+                  img: 'https://y.gtimg.cn/music/photo_new/T002R150x150M000' + val.albummid + '.jpg?max_age=2592000',
+                  songid: val.songid,
+                  singer: val.singer[0].name})
+              })
+              this.$emit('datadetail', this.searchList)
+            } else {
+              this.notFound = true
+            }
+          })
       }
     }
   }

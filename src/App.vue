@@ -41,7 +41,7 @@
       } else if (window.location.hash === '#/others') {
           this.itemPosition = 200 + '%'
       }
-      this.$http.get('/api')
+      this.$axios.get('/api')
         .then((res) => {
           this.userInfo = res.data.data
         })
