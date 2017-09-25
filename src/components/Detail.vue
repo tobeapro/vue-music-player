@@ -1,6 +1,5 @@
 <template lang="pug">
   Table(:columns="columns1",:data="dataList")
-
 </template>
 
 <script>
@@ -48,18 +47,21 @@ export default{
     this.$axios.get('/api/detail')
       .then((res) => {
         this.dataList = res.data.data
-        console.log(this.$store.getters.getCount)
       })
       .catch((res) => {
         console.log(res)
       })
-  },
-  methods: {
-    songlist: function (val) {
+    this.$on('datadetail', val => {
+      console.log(2)
       this.dataList2 = val
-      console.log(val)
-    }
+    })
   },
+//  methods: {
+//    songlist: function (val) {
+//      this.dataList2 = val
+//      console.log(val)
+//    }
+//  },
   filters: {
     priceFilter: function (val) {
       return '¥' + ' ' + val

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-  import jsonp from 'jsonp'
+//  import jsonp from 'jsonp'
   export default{
     name: 'header',
     data () {
@@ -31,27 +31,56 @@
         type: Object
       }
     },
-    methods: {
+   methods: {
       search: function () {
-          jsonp(
-            'https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp?format=jsonp&n=20&w=' + this.search_content + '', {
-              jsonp: 'callback'
-            }).then(res => {
-            if (res.body.data.song.list !== []) {
+//          jsonp(
+//            'https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp?format=jsonp&n=20&w=' + this.search_content + '', {
+//              dataType: 'jsonp',
+//              jsonp: 'callback',
+//              callback: '__jp0'
+//            }, function (err, res) {
+//              console.log(err, res)
+//              if (err) {
+//                console.log(err)
+//              } else {
+//                console.log(res)
+//                if (data.song.list !== []) {
+//                  this.hotListState = false
+//                  this.searchListState = true
+//                  this.searchList = []
+//                  data.song.list.forEach(val => {
+//                    this.searchList.push({
+//                      name: val.songname,
+//                      img: 'https://y.gtimg.cn/music/photo_new/T002R150x150M000' + val.albummid + '.jpg?max_age=2592000',
+//                      songid: val.songid,
+//                      singer: val.singer[0].name
+//                    })
+//                  })
+//                  console.log(this.searchList)
+//                  this.$emit('datadetail', this.searchList)
+//                }
+//              }
+//            })
+        this.$axios.get('/api/musicList2')
+          .then((res) => {
+            if (res.data.data.data.song.list !== []) {
               this.hotListState = false
               this.searchListState = true
               this.searchList = []
-              res.body.data.song.list.forEach(val => {
+              res.data.data.data.song.list.forEach(val => {
                 this.searchList.push({
                   name: val.songname,
                   img: 'https://y.gtimg.cn/music/photo_new/T002R150x150M000' + val.albummid + '.jpg?max_age=2592000',
                   songid: val.songid,
-                  singer: val.singer[0].name})
+                  singer: val.singer[0].name
+                })
               })
+              console.log(this.searchList)
               this.$emit('datadetail', this.searchList)
-            } else {
-              this.notFound = true
             }
+          })
+          .catch((res) => {
+            console.log(res)
           })
       }
     }

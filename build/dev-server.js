@@ -104,4 +104,10 @@ apiRoutes.get('/detail',function(req,res){
     data:appData.dataList
   })
 })
+apiRoutes.get('/musicList2',function(req,res){
+  res.json({
+    errno: 0,
+    data:appData.musicList2
+  })
+})
 app.use('/api',apiRoutes)
