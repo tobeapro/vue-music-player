@@ -2,7 +2,7 @@
   div(id="home",class="home") hello
     router-link(to="/helloLink") hello-link2
     router-view
-    Table(:columns="columns2",:data="dataList2")
+    Table(:columns="columns2",:data="musiclist")
 </template>
 
 <script>
@@ -31,10 +31,10 @@
        dataList2: []
      }
     },
-    created: function () {
-      this.$on('datadetail', val => {
-        this.dataList2 = val
-      })
+    props: {
+      musiclist: {
+        type: Array
+      }
     }
   }
 </script>

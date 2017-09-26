@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <v-header :user="userInfo"></v-header>
+    <v-header :user="userInfo" @datadetail="list"></v-header>
     <div class="tab">
       <div class="tab-item">
         <router-link to="/" @click.native="selectItem(0)">首页</router-link>
@@ -13,7 +13,7 @@
       </div>
       <div class="chosen-item" :style="{transform:'translateX('+itemPosition+')'}"></div>
     </div>
-    <router-view></router-view>
+    <router-view :musiclist="musicList"></router-view>
   </div>
 </template>
 
@@ -30,7 +30,8 @@
           userName: '',
           userIcon: ''
         },
-        itemPosition: 0
+        itemPosition: 0,
+        musicList: []
       }
     },
     created: function () {
@@ -55,6 +56,10 @@
     methods: {
       selectItem: function (e) {
         this.itemPosition = e + '%'
+      },
+      list: function (val) {
+        console.log(val)
+        this.musicList = val
       }
     }
   }

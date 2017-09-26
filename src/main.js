@@ -10,8 +10,8 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 Vue.use(iview)
 Vue.use(axios)
-Vue.config.productionTip = false
 Vue.prototype.$axios = axios
+Vue.config.productionTip = false
 /* eslint-disable no-new */
 export default new Vue({
   el: '#app',
