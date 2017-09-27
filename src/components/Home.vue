@@ -4,14 +4,14 @@
       router-link(to="/helloLink" class="hello-link") click
     router-view
     ul
-      li(v-for="(value,index) in list",class="music-li",@click="playMusic(value.songid)")
+      li(v-for="(value,index) in musiclist.slice((pageNow - 1) * pageSize, pageNow * pageSize)",class="music-li",@click="playMusic(value.songid)")
         span(v-text="index+1" class="music-li-index")
         span(class="music-li-img")
           img(:src="value.img")
         span(v-text="value.name" class="music-li-name")
         span(v-text="value.singer" class="music-li-singer")
-    Page(:total="musiclist.length",size="small" v-if="musiclist.length!==0")
-    audio(:src="musicUrl",current="pageNow",page-size="pageSize",on-change="changePage")
+    Page(:total="musiclist.length",size="small",:current="pageNow",:page-size="pageSize",@on-change="changePage" v-if="musiclist.length!==0")
+    audio(:src="musicUrl")
 </template>
 
 <script>
@@ -21,8 +21,7 @@
      return {
        musicUrl: '',
        pageNow: 1,
-       pageSize: 10,
-       list: []
+       pageSize: 10
      }
     },
     props: {
@@ -30,13 +29,15 @@
         type: Array
       }
     },
-    created: () => {
-      this.list = this.musiclist.slice(0, 10)
-    },
     methods: {
       playMusic: (val) => {
         this.musicUrl = 'http://ws.stream.qqmusic.qq.com/' + val + '.m4a?fromtag=46'
         console.log(this.musicUrl)
+      },
+      changePage: (val) => {
+        this.pageNow = val
+        console.log(this.pageNow)
+//        this.list = this.musiclist.slice((this.pageNow - 1) * this.pageSize, this.pageNow * this.pageSize)
       }
     }
   }
