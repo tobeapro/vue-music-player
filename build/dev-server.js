@@ -92,7 +92,7 @@ module.exports = {
 //请求本地数据
 var appData=require('../data.json');
 var apiRoutes=express.Router();
-apiRoutes.get('',function(req,res){
+apiRoutes.get('/',function(req,res){
   res.json({
     errno: 0,
     data:appData.userInfo
@@ -110,4 +110,4 @@ apiRoutes.get('/musicList2',function(req,res){
     data:appData.musicList2
   })
 })
-app.use('/api',apiRoutes)
+app.use('/user',apiRoutes)

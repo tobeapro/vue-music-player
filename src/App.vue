@@ -42,7 +42,7 @@
       } else if (window.location.hash === '#/others') {
           this.itemPosition = 200 + '%'
       }
-      this.$axios.get('/api')
+      this.$axios.get('/user')
         .then((res) => {
           this.userInfo = res.data.data
         })
@@ -58,8 +58,9 @@
         this.itemPosition = e + '%'
       },
       list: function (val) {
-        console.log(val)
         this.musicList = val
+        this.itemPosition = 0
+        window.location.hash = '/'
       }
     }
   }

@@ -5,8 +5,9 @@
         <span class="title_text">云音乐</span>
       </a>
       <div class="search_text">
-        <input class="ivu-input" placeholder="请输入..." v-model="search_content">
-        <i class="ivu-icon ivu-icon-ios-search-strong" @click="search()"></i>
+        <Spin size="large" fix v-if="searchListState"></Spin>
+        <input class="ivu-input" placeholder="请输入..." v-model="search_content" @keyup.enter="search(search_content)">
+        <i class="ivu-icon ivu-icon-ios-search-strong" @click="search(search_content)"></i>
       </div>
       <div class="user_part">
         <i class="user_icon">
@@ -18,11 +19,6 @@
 </template>
 
 <script>
-  import jsonp from 'jsonp'
-  let musicData
-  window.callback = function (data) {
-     musicData = data
-  }
   export default{
     name: 'header',
     data () {
@@ -38,58 +34,32 @@
       }
     },
    methods: {
-//      callback: function (data) {
-//        return data
-//      },
-      search: function () {
-          jsonp(
-            'https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp?format=jsonp&n=20&w=' + this.search_content + '', {
-              params: {},
-              jsonp: 'callback'
-            }, (err, res) => {
-              if(err) {
-                console.log(1)
-              }else {
-                console.log(musicData)
-                if (musicData.data.song.list !== []) {
-                  this.hotListState = false
-                  this.searchListState = true
-                  this.searchList = []
-                  musicData.data.song.list.forEach(val => {
-                    this.searchList.push({
-                      name: val.songname,
-                      img: 'https://y.gtimg.cn/music/photo_new/T002R150x150M000' + val.albummid + '.jpg?max_age=2592000',
-                      songid: val.songid,
-                      singer: val.singer[0].name
-                    })
+      search: function (val) {
+        if (val === '') {
+          this.$Message.warning('请输入搜索信息')
+        } else {
+          this.searchListState = true
+          this.$axios.get('/api/soso/fcgi-bin/search_for_qq_cp?format=json&n=20&w=' + val + '')
+          .then((res) => {
+              if (res.data.data.song.list !== []) {
+                this.hotListState = false
+                this.searchListState = false
+                this.searchList = []
+                res.data.data.song.list.forEach(val => {
+                  this.searchList.push({
+                    name: val.songname,
+                    img: 'https://y.gtimg.cn/music/photo_new/T002R150x150M000' + val.albummid + '.jpg?max_age=2592000',
+                    songid: val.songid,
+                    singer: val.singer[0].name
                   })
-                  console.log(this.searchList)
-                  this.$emit('datadetail', this.searchList)
-                }
+                })
+                this.$emit('datadetail', this.searchList)
               }
             })
-//
-//         this.$axios.get('/api/musicList2')
-//          .then((res) => {
-//            if (res.data.data.data.song.list !== []) {
-//              this.hotListState = false
-//              this.searchListState = true
-//              this.searchList = []
-//              res.data.data.data.song.list.forEach(val => {
-//                this.searchList.push({
-//                  name: val.songname,
-//                  img: 'https://y.gtimg.cn/music/photo_new/T002R150x150M000' + val.albummid + '.jpg?max_age=2592000',
-//                  songid: val.songid,
-//                  singer: val.singer[0].name
-//                })
-//              })
-//              console.log(this.searchList)
-//              this.$emit('datadetail', this.searchList)
-//            }
-//          })
-//          .catch((res) => {
-//            console.log(res)
-//          })
+          .catch((res) => {
+            console.log(res)
+          })
+        }
       }
     }
   }

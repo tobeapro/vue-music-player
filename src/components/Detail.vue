@@ -44,7 +44,7 @@ export default{
     }
   },
   created: function () {
-    this.$axios.get('/api/detail')
+    this.$axios.get('/user/detail')
       .then((res) => {
         this.dataList = res.data.data
       })

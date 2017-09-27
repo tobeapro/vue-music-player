@@ -24,20 +24,12 @@ export default new Vue({
 })
 const store = new Vuex.Store({
   state: {
-    count: 1
+    count: 0
   },
   mutations: {
-    Count (state, platform) {
-      state.count = platform
+    increment (state) {
+      state.count++
     }
-  },
-  actions: {
-    setCount ({commit}, platform) {
-      commit('Count', platform)
-    }
-  },
-  getters: {
-    getCount: (state) => state.count
   }
 })
 
