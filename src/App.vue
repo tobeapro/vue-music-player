@@ -3,15 +3,14 @@
     <v-header :user="userInfo" @datadetail="list"></v-header>
     <div class="tab">
       <div class="tab-item">
-        <router-link to="/" @click.native="selectItem(0)">首页</router-link>
+        <router-link to="/">首页</router-link>
       </div>
       <div class="tab-item">
-        <router-link to="/detail" @click.native="selectItem(100)">详情</router-link>
+        <router-link to="/detail">详情</router-link>
       </div>
       <div class="tab-item">
-        <router-link to="/others" @click.native="selectItem(200)">其他</router-link>
+        <router-link to="/others">其他</router-link>
       </div>
-      <div class="chosen-item" :style="{transform:'translateX('+itemPosition+')'}"></div>
     </div>
     <router-view :musiclist="musicList"></router-view>
   </div>
@@ -30,18 +29,10 @@
           userName: '',
           userIcon: ''
         },
-        itemPosition: 0,
         musicList: []
       }
     },
     created: function () {
-      if (window.location.hash === '#/') {
-          this.itemPosition = 0
-      } else if (window.location.hash === '#/detail') {
-          this.itemPosition = 100 + '%'
-      } else if (window.location.hash === '#/others') {
-          this.itemPosition = 200 + '%'
-      }
       this.$axios.get('/user')
         .then((res) => {
           this.userInfo = res.data.data
@@ -54,12 +45,8 @@
       'v-header': header
     },
     methods: {
-      selectItem: function (e) {
-        this.itemPosition = e + '%'
-      },
       list: function (val) {
         this.musicList = val
-        this.itemPosition = 0
         window.location.hash = '/'
       }
     }
@@ -98,10 +85,13 @@ input[disabled], select[disabled]{
   background: #f9fafc !important;
   cursor: not-allowed !important;
 }
+.app{
+  height:100%;
+}
 .app .tab{
   display:flex;
   position:relative;
-  height:40px;
+  height:42px;
   line-height:40px;
   font-size:14px;
   font-weight:bold;
@@ -116,16 +106,18 @@ input[disabled], select[disabled]{
   width:100%;
   color:#000;
   letter-spacing: 2px;
+  border-bottom:2px solid transparent;
+  transition:border-color .4s;
 }
 .app .tab-item a.router-link-exact-active{
   color:indianred;
+  border-color:#dc0000;
 }
-.app .chosen-item{
-  position: absolute;
-  bottom:0;
-  left:0;
-  width:33.3%;
-  transition: .4s;
-  border-bottom:3px solid #dc0000;
-}
+/*.app .chosen-item{*/
+  /*position: absolute;*/
+  /*bottom:0;*/
+  /*left:0;*/
+  /*width:33.3%;*/
+  /*transition: .4s;*/
+/*}*/
 </style>

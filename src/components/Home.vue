@@ -3,14 +3,14 @@
     div(class="hello-text" v-if="musiclist.length===0") hello
       router-link(to="/helloLink" class="hello-link") click
     router-view
-    ul
-      li(v-for="(value,index) in musiclist.slice((pageNow - 1) * pageSize, pageNow * pageSize)",class="music-li",@click="playMusic(value.songid)")
+    ul(class="music-ul" v-if="musiclist.length!==0")
+      li(v-for="(value,index) in showlist",class="music-li",@click="playMusic(value.songid)")
         span(v-text="index+1" class="music-li-index")
         span(class="music-li-img")
           img(:src="value.img")
         span(v-text="value.name" class="music-li-name")
         span(v-text="value.singer" class="music-li-singer")
-    Page(:total="musiclist.length",size="small",:current="pageNow",:page-size="pageSize",@on-change="changePage" v-if="musiclist.length!==0")
+    Page(:total="musiclist.length",:current="pageNow",:page-size="pageSize",@on-change="changePage",v-if="musiclist.length > pageSize")
     audio(:src="musicUrl")
 </template>
 
@@ -29,15 +29,22 @@
         type: Array
       }
     },
+    computed: {
+      showlist () {
+        return this.$props.musiclist.slice((this.pageNow - 1) * this.pageSize, this.pageNow * this.pageSize)
+      }
+    },
     methods: {
       playMusic: (val) => {
         this.musicUrl = 'http://ws.stream.qqmusic.qq.com/' + val + '.m4a?fromtag=46'
         console.log(this.musicUrl)
       },
-      changePage: (val) => {
+      getList () {
+        return this.$props.musiclist.slice((this.pageNow - 1) * this.pageSize, this.pageNow * this.pageSize)
+      },
+      changePage (val) {
         this.pageNow = val
-        console.log(this.pageNow)
-//        this.list = this.musiclist.slice((this.pageNow - 1) * this.pageSize, this.pageNow * this.pageSize)
+        this.getList()
       }
     }
   }
@@ -45,6 +52,8 @@
 
 <style lang="scss">
   .home {
+    height:100%;
+    background:url("../../static/bg2.png") 0 100px;
     .hello-text{
       height:200px;
       line-height:200px;
@@ -53,48 +62,63 @@
       text-align:center;
       color:#4c39ff;
     }
-    .music-li {
-      height: 40px;
-      line-height: 40px;
-      font-size: 14px;
-      font-weight: bold;
-      cursor: pointer;
-      display: flex;
-      &:hover {
-        color: #fff;
-        background: #5edbff;
-        transition: .4s;
-      }
-      .music-li-index {
-        display: inline-block;
-        vertical-align: top;
-        flex: 1;
-        text-align: center;
-      }
-      .music-li-img {
-        display: inline-block;
-        flex: 2;
-        img {
-          width: 40px;
-          height: 40px;
+    .music-ul {
+      border-top:1px solid #ccc;
+      border-bottom:2px solid #dc0000;
+      .music-li {
+        height: 40px;
+        line-height: 40px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+        &:not(:last-child) {
+          border-bottom: 1px solid #ccc;
+        }
+        &:hover {
+          color: #fff;
+          background: #2d8cf0;
+          transition: .6s;
+          img {
+            opacity: 1 !important;
+          }
+        }
+        .music-li-index {
+          display: inline-block;
+          vertical-align: top;
+          flex: 1;
+          text-align: center;
+        }
+        .music-li-img {
+          display: inline-block;
+          flex: 2;
+          img {
+            width: 40px;
+            height: 40px;
+            opacity: .8;
+          }
+        }
+        .music-li-name {
+          display: inline-block;
+          vertical-align: top;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          flex: 8;
+        }
+        .music-li-singer {
+          display: inline-block;
+          vertical-align: top;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          flex: 8;
         }
       }
-      .music-li-name {
-        display: inline-block;
-        vertical-align: top;
-        white-space:nowrap;
-        overflow: hidden;
-        text-overflow:ellipsis;
-        flex:8;
-      }
-      .music-li-singer {
-        display: inline-block;
-        vertical-align: top;
-        white-space:nowrap;
-        overflow: hidden;
-        text-overflow:ellipsis;
-        flex: 8;
-      }
+    }
+    .ivu-page{
+      padding-left:40px;
+      padding-top:6px;
     }
   }
 </style>

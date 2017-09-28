@@ -21,26 +21,7 @@ export default{
           key: 'price'
         }
       ],
-      columns2: [
-        {
-          type: 'index',
-          align: 'center'
-        },
-        {
-          title: '歌名',
-          key: 'name'
-        },
-        {
-          title: 'id',
-          key: 'songid'
-        },
-        {
-          title: '歌手',
-          key: 'singer'
-        }
-      ],
-      dataList: [],
-      dataList2: []
+      dataList: []
     }
   },
   created: function () {
@@ -51,17 +32,7 @@ export default{
       .catch((res) => {
         console.log(res)
       })
-    this.$on('datadetail', val => {
-      console.log(2)
-      this.dataList2 = val
-    })
   },
-//  methods: {
-//    songlist: function (val) {
-//      this.dataList2 = val
-//      console.log(val)
-//    }
-//  },
   filters: {
     priceFilter: function (val) {
       return '¥' + ' ' + val

@@ -39,7 +39,7 @@
           this.$Message.warning('请输入搜索信息')
         } else {
           this.searchListState = true
-          this.$axios.get('/api/soso/fcgi-bin/search_for_qq_cp?format=json&n=20&w=' + val + '')
+          this.$axios.get('/api/soso/fcgi-bin/search_for_qq_cp?format=json&n=30&w=' + val + '')
           .then((res) => {
               if (res.data.data.song.list !== []) {
                 this.hotListState = false
@@ -57,6 +57,8 @@
               }
             })
           .catch((res) => {
+            this.searchListState = false
+            this.$Message.warning('搜索出错')
             console.log(res)
           })
         }
