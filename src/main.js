@@ -13,15 +13,6 @@ Vue.use(axios)
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 /* eslint-disable no-new */
-export default new Vue({
-  el: '#app',
-  router,
-  axios,
-  store,
-  iview,
-  template: '<App/>',
-  components: { App }
-})
 const store = new Vuex.Store({
   state: {
     count: 0
@@ -31,5 +22,14 @@ const store = new Vuex.Store({
       state.count++
     }
   }
+})
+export default new Vue({
+  el: '#app',
+  router,
+  axios,
+  store,
+  iview,
+  template: '<App/>',
+  components: { App }
 })
 

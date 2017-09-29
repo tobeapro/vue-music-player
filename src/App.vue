@@ -13,14 +13,13 @@
       </div>
     </div>
     <router-view :musiclist="musicList"></router-view>
+    <div @click="add" style="height:100px;background:blue"></div>
   </div>
 </template>
 
 <script>
   import header from '@/components/header'
-  import Vue from 'vue'
-  import Vuex from 'vuex'
-  Vue.use(Vuex)
+
   export default {
     name: 'app',
     data: function () {
@@ -48,6 +47,10 @@
       list: function (val) {
         this.musicList = val
         window.location.hash = '/'
+      },
+      add () {
+        this.$store.commit('increment')
+        console.log(this.$store.state.count)
       }
     }
   }
