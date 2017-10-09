@@ -9,7 +9,6 @@ import 'iview/dist/styles/iview.css'
 import Vuex from 'vuex'
 Vue.use(Vuex)
 Vue.use(iview)
-Vue.use(axios)
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 /* eslint-disable no-new */
