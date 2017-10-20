@@ -34,7 +34,7 @@
       }
     },
    methods: {
-      search: function (val) {
+      search (val) {
         if (val === '') {
           this.$Message.warning('请输入搜索信息')
         } else {

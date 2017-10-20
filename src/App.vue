@@ -1,9 +1,12 @@
 <template>
   <div class="app">
     <v-header :user="userInfo" @datadetail="list"></v-header>
+    <!--头部-->
     <div class="tab">
       <div class="tab-item">
-        <router-link to="/">首页</router-link>
+        <router-link to="/">
+          <span>首页</span><i class="fa fa-snowflake-o" aria-hidden="true"></i>
+        </router-link>
       </div>
       <div class="tab-item">
         <router-link to="/detail">详情</router-link>
