@@ -2,6 +2,8 @@
   <div class="app">
     <v-header :user="userInfo" @datadetail="list"></v-header>
     <!--头部-->
+    <side-bar :showSide="showSide" :sideStatus="sideStatus"></side-bar>
+    <!--左侧栏-->
     <div class="tab">
       <div class="tab-item">
         <router-link to="/">
@@ -22,7 +24,7 @@
 
 <script>
   import header from '@/components/header'
-
+  import sidebar from '@/components/Sidebar'
   export default {
     name: 'app',
     data: function () {
@@ -31,7 +33,8 @@
           userName: '',
           userIcon: ''
         },
-        musicList: []
+        musicList: [],
+        sideStatus: false
       }
     },
     created: function () {
@@ -44,7 +47,8 @@
         })
     },
     components: {
-      'v-header': header
+      'v-header': header,
+      'side-bar': sidebar
     },
     methods: {
       list: function (val) {
@@ -54,6 +58,9 @@
       add () {
         this.$store.commit('increment')
         console.log(this.$store.state.count)
+      },
+      showSide () {
+        this.sideStatus = true
       }
     }
   }

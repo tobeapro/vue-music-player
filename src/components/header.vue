@@ -1,9 +1,9 @@
 <template>
     <div id="header" class="header">
-      <a class="icon" href="#">
+      <i class="icon" @click="showSide">
         <img width="40" src="../assets/icon.png">
         <span class="title_text">云音乐</span>
-      </a>
+      </i>
       <div class="search_text">
         <Spin size="large" fix v-if="searchListState"></Spin>
         <input class="ivu-input" placeholder="请输入..." v-model="search_content" @keyup.enter="search(search_content)">
@@ -63,6 +63,9 @@
           })
         }
       }
+    },
+    showSide () {
+      this.$emit('showSide')
     }
   }
 </script>
