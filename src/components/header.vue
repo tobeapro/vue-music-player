@@ -1,7 +1,7 @@
 <template>
     <div id="header" class="header">
       <i class="icon" @click="showSide">
-        <img width="40" src="../assets/icon.png">
+        <img width="40" src="../../static/icon.png">
         <span class="title_text">云音乐</span>
       </i>
       <div class="search_text">

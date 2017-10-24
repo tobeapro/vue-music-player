@@ -6,13 +6,11 @@ import router from './router'
 import axios from 'axios'
 import iview from 'iview'
 import 'iview/dist/styles/iview.css'
-import 'vue-awesome/icons'
-import Icon from 'vue-awesome/components/Icon.vue'
+import 'font-awesome/css/font-awesome.min.css'
 import Vuex from 'vuex'
 import store from './store'
 Vue.use(Vuex)
 Vue.use(iview)
-Vue.component('icon', Icon)
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 /* eslint-disable no-new */
@@ -23,6 +21,6 @@ export default new Vue({
   store,
   iview,
   template: '<App/>',
-  components: { App,Icon }
+  components: { App }
 })
 

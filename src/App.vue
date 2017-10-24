@@ -7,7 +7,7 @@
     <div class="tab">
       <div class="tab-item">
         <router-link to="/">
-          <span>首页</span><i class="fa fa-snowflake-o" aria-hidden="true"></i>
+          <span>首页</span></i>
         </router-link>
       </div>
       <div class="tab-item">

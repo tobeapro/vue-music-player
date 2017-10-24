@@ -11,7 +11,7 @@
             span(class="lv") lv7
           div(class="user-header-sign")
             span(class="sign")
-              icon(name="flag")
+              i(class="fa fa-flag",aria-hidden="true")
               span 签到
         div(class="user-header-info")
           div(class="user-header-item")
@@ -24,36 +24,50 @@
             div(class="title") 粉丝
             div(class="content") 2
           div(class="user-header-item")
+            i(class="fa fa-pencil")
             div(class="title") 我的资料
       div(class="user-body")
         i(class="split-border")
         div(class="user-body-item")
+          i(class="fa fa-comment-o")
           span 我的消息
         div(class="user-body-item")
+          i(class="fa fa-user-o")
           span 会员中心
         div(class="user-body-item")
+          i(class="fa fa-shopping-bag")
           span 商城
         div(class="user-body-item")
+          i(class="fa fa-headphones")
           span 在线听歌免流量
         i(class="split-border")
         div(class="user-body-item")
+          i(class="fa fa-cog")
           span 设置
         div(class="user-body-item")
+          i(class="fa fa-qrcode")
           span 扫一扫
         div(class="user-body-item")
+          i(class="fa fa-shopping-bag")
           span 个性换肤
         div(class="user-body-item")
+          i(class="fa fa-moon-o")
           span 夜间模式
         div(class="user-body-item")
+          i(class="fa fa-user-times")
           span 定时关闭
         div(class="user-body-item")
+          i(class="fa fa-clock-o")
           span 音乐闹钟
         div(class="user-body-item")
+          i(class="fa fa-bus")
           span 驾驶模式
         i(class="split-border")
         div(class="user-body-item")
+          i(class="fa fa-share-square-o")
           span 分享网易云音乐
         div(class="user-body-item")
+          i(class="fa fa-info")
           span 关于
         i(class="split-border")
       div(class="user-footer")
@@ -97,7 +111,7 @@
       top:0;
       left:0;
       bottom:0;
-      width:280px;
+      width:300px;
       z-index:11;
       background:#fff;
       overflow-y:auto;
@@ -120,9 +134,10 @@
           border-bottom:1px solid #ddd;
           .name{
             display:inline-block;
+            margin-top:20px;
             width:100%;
-            height:50px;
-            line-height:50px;
+            height:30px;
+            line-height:30px;
             font-size:14px;
             font-weight:bold;
             color:#000;
@@ -145,7 +160,7 @@
           .sign{
             display: inline-block;
             margin:30px auto;
-            padding:0 10px;
+            padding:0 6px;
             height:20px;
             line-height:20px;
             color:#dc0000;
@@ -153,10 +168,13 @@
             -webkit-border-radius: 6px;
             -moz-border-radius: 6px;
             border-radius: 6px;
+            .fa{
+              margin-right:2px;
+            }
           }
         }
         .user-header-item{
-          margin:12px 0;
+          margin:8px 0;
           flex:1;
           text-align:center;
           &:not(:last-child){
@@ -168,13 +186,25 @@
           .content{
             font-weight:bold;
           }
+          .fa{
+            color:#aaa;
+          }
         }
       }
       .user-body{
+        padding-bottom:40px;
         font-size:0;
         .user-body-item{
+          padding:0 10px;
           line-height:26px;
           font-size:12px;
+          cursor:pointer;
+          &:hover{
+            background:#eee;
+          }
+          .fa{
+            margin-right:10px;
+          }
         }
         .split-border{
           display:inline-block;
@@ -188,7 +218,7 @@
         left:0;
         bottom:0;
         z-index:1;
-        width:280px;
+        width:300px;
         height:40px;
         line-height:40px;
         text-align:center;
