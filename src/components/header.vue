@@ -62,10 +62,10 @@
             console.log(res)
           })
         }
-      }
-    },
-    showSide () {
-      this.$emit('showSide')
+      },
+     showSide () {
+        this.$store.dispatch('showSideBar')
+     }
     }
   }
 </script>
@@ -82,6 +82,7 @@
         display:inline-block;
         width:40%;
         max-width:300px;
+        cursor: pointer;
         &:hover{
           animation:sign .2s ;
         }

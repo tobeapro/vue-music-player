@@ -2,7 +2,7 @@
   <div class="app">
     <v-header :user="userInfo" @datadetail="list"></v-header>
     <!--头部-->
-    <side-bar :showSide="showSide" :sideStatus="sideStatus"></side-bar>
+    <side-bar :user="userInfo"></side-bar>
     <!--左侧栏-->
     <div class="tab">
       <div class="tab-item">
@@ -18,7 +18,6 @@
       </div>
     </div>
     <router-view :musiclist="musicList"></router-view>
-    <div @click="add" style="height:100px;background:blue"></div>
   </div>
 </template>
 
@@ -34,7 +33,7 @@
           userIcon: ''
         },
         musicList: [],
-        sideStatus: false
+        isSideShow: false
       }
     },
     created: function () {
@@ -54,13 +53,6 @@
       list: function (val) {
         this.musicList = val
         window.location.hash = '/'
-      },
-      add () {
-        this.$store.commit('increment')
-        console.log(this.$store.state.count)
-      },
-      showSide () {
-        this.sideStatus = true
       }
     }
   }
@@ -126,11 +118,4 @@ input[disabled], select[disabled]{
   color:indianred;
   border-color:#dc0000;
 }
-/*.app .chosen-item{*/
-  /*position: absolute;*/
-  /*bottom:0;*/
-  /*left:0;*/
-  /*width:33.3%;*/
-  /*transition: .4s;*/
-/*}*/
 </style>
