@@ -1,77 +1,78 @@
 <template lang="pug">
   div(class="sidebar",v-show="sideStatus")
     div(class="sidebar-mask",@click="hideSide")
-    div(class="sidebar-content")
-      div(class="user-header")
-        div(class="user-header-info")
-          div(class="user-header-img")
-            img(:src="user.userIcon",width="40")
-          div(class="user-header-name")
-            span(class="name",v-text="user.userName")
-            span(class="lv") lv7
-          div(class="user-header-sign")
-            span(class="sign")
-              i(class="fa fa-flag",aria-hidden="true")
-              span 签到
-        div(class="user-header-info")
-          div(class="user-header-item")
-            div(class="title") 动态
-            div(class="content") 0
-          div(class="user-header-item")
-            div(class="title") 关注
-            div(class="content") 2
-          div(class="user-header-item")
-            div(class="title") 粉丝
-            div(class="content") 2
-          div(class="user-header-item")
-            i(class="fa fa-pencil")
-            div(class="title") 我的资料
-      div(class="user-body")
-        i(class="split-border")
-        div(class="user-body-item")
-          i(class="fa fa-comment-o")
-          span 我的消息
-        div(class="user-body-item")
-          i(class="fa fa-user-o")
-          span 会员中心
-        div(class="user-body-item")
-          i(class="fa fa-shopping-bag")
-          span 商城
-        div(class="user-body-item")
-          i(class="fa fa-headphones")
-          span 在线听歌免流量
-        i(class="split-border")
-        div(class="user-body-item")
-          i(class="fa fa-cog")
-          span 设置
-        div(class="user-body-item")
-          i(class="fa fa-qrcode")
-          span 扫一扫
-        div(class="user-body-item")
-          i(class="fa fa-shopping-bag")
-          span 个性换肤
-        div(class="user-body-item")
-          i(class="fa fa-moon-o")
-          span 夜间模式
-        div(class="user-body-item")
-          i(class="fa fa-user-times")
-          span 定时关闭
-        div(class="user-body-item")
-          i(class="fa fa-clock-o")
-          span 音乐闹钟
-        div(class="user-body-item")
-          i(class="fa fa-bus")
-          span 驾驶模式
-        i(class="split-border")
-        div(class="user-body-item")
-          i(class="fa fa-share-square-o")
-          span 分享网易云音乐
-        div(class="user-body-item")
-          i(class="fa fa-info")
-          span 关于
-        i(class="split-border")
-      div(class="user-footer")
-        span(class="text") 退出登录
+    transition(name="side-fade")
+      div(class="sidebar-content",v-show="sideStatus")
+        div(class="user-header")
+          div(class="user-header-info")
+            div(class="user-header-img")
+              img(:src="user.userIcon",width="40")
+            div(class="user-header-name")
+              span(class="name",v-text="user.userName")
+              span(class="lv") lv7
+            div(class="user-header-sign")
+              span(class="sign")
+                i(class="fa fa-flag",aria-hidden="true")
+                span 签到
+          div(class="user-header-info")
+            div(class="user-header-item")
+              div(class="title") 动态
+              div(class="content") 0
+            div(class="user-header-item")
+              div(class="title") 关注
+              div(class="content") 2
+            div(class="user-header-item")
+              div(class="title") 粉丝
+              div(class="content") 2
+            div(class="user-header-item")
+              i(class="fa fa-pencil")
+              div(class="title") 我的资料
+        div(class="user-body")
+          i(class="split-border")
+          div(class="user-body-item")
+            i(class="fa fa-comment-o")
+            span 我的消息
+          div(class="user-body-item")
+            i(class="fa fa-user-o")
+            span 会员中心
+          div(class="user-body-item")
+            i(class="fa fa-shopping-bag")
+            span 商城
+          div(class="user-body-item")
+            i(class="fa fa-headphones")
+            span 在线听歌免流量
+          i(class="split-border")
+          div(class="user-body-item")
+            i(class="fa fa-cog")
+            span 设置
+          div(class="user-body-item")
+            i(class="fa fa-qrcode")
+            span 扫一扫
+          div(class="user-body-item")
+            i(class="fa fa-shopping-bag")
+            span 个性换肤
+          div(class="user-body-item")
+            i(class="fa fa-moon-o")
+            span 夜间模式
+          div(class="user-body-item")
+            i(class="fa fa-user-times")
+            span 定时关闭
+          div(class="user-body-item")
+            i(class="fa fa-clock-o")
+            span 音乐闹钟
+          div(class="user-body-item")
+            i(class="fa fa-bus")
+            span 驾驶模式
+          i(class="split-border")
+          div(class="user-body-item")
+            i(class="fa fa-share-square-o")
+            span 分享网易云音乐
+          div(class="user-body-item")
+            i(class="fa fa-info")
+            span 关于
+          i(class="split-border")
+        div(class="user-footer")
+          span(class="text") 退出登录
 </template>
 
 <script>
@@ -106,15 +107,21 @@
       z-index:10;
       background:rgba(0,0,0,.5);
     }
-    .sidebar-content{
-      position:fixed;
-      top:0;
-      left:0;
-      bottom:0;
-      width:300px;
-      z-index:11;
-      background:#fff;
-      overflow-y:auto;
+    .sidebar-content {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 300px;
+      z-index: 11;
+      background: #fff;
+      overflow-y: auto;
+      &.side-fade-enter-to, &.side-fade-leave-to {
+        transition: transform .3s ease;
+      }
+      &.side-fade-enter, &.side-fade-leave-to {
+        transform: translateX(-300px);
+      }
       .user-header-info{
         display:flex;
         .user-header-img{
