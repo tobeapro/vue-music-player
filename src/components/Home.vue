@@ -11,7 +11,6 @@
         span(v-text="value.name" class="music-li-name")
         span(v-text="value.singer" class="music-li-singer")
     Page(:total="musiclist.length",:current="pageNow",:page-size="pageSize",@on-change="changePage",v-if="musiclist.length > pageSize")
-    audio(:src="musicUrl")
 </template>
 
 <script>
@@ -52,7 +51,12 @@
 
 <style lang="scss">
   .home {
-    height:100%;
+    position:fixed;
+    top:102px;
+    left:0;
+    right:0;
+    bottom:50px;
+    overflow-y:auto;
     background:url("../../static/bg2.png") 0 100px;
     .hello-text{
       height:200px;

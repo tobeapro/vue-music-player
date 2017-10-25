@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import sidebar from './modules/sidebar.js'
+import audio from './modules/audio.js'
 Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
@@ -12,7 +13,8 @@ const store = new Vuex.Store({
     }
   },
   modules: {
-    sidebar: sidebar
+    sidebar: sidebar,
+    audio: audio
   }
 })
 export default store

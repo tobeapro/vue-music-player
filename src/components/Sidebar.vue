@@ -85,7 +85,7 @@
     },
     computed: {
       sideStatus () {
-        return this.$store.state.sidebar.showStatus
+        return this.$store.getters.getStatus
       }
     },
     methods: {

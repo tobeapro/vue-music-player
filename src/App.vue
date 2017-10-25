@@ -1,5 +1,6 @@
 <template>
   <div class="app">
+    <audio ref="audio"></audio>
     <v-header :user="userInfo" @datadetail="list"></v-header>
     <!--头部-->
     <side-bar :user="userInfo"></side-bar>
@@ -7,7 +8,7 @@
     <div class="tab">
       <div class="tab-item">
         <router-link to="/">
-          <span>首页</span></i>
+          <span>首页</span>
         </router-link>
       </div>
       <div class="tab-item">
@@ -18,12 +19,15 @@
       </div>
     </div>
     <router-view :musiclist="musicList"></router-view>
+    <bottom-bar></bottom-bar>
+    <!--底部音乐-->
   </div>
 </template>
 
 <script>
   import header from '@/components/header'
   import sidebar from '@/components/Sidebar'
+  import bottombar from '@/components/bottombar'
   export default {
     name: 'app',
     data: function () {
@@ -40,6 +44,8 @@
       this.$axios.get('/user')
         .then((res) => {
           this.userInfo = res.data.data
+          this.$refs.audio.setAttribute('src', res.data.data.music.url)
+          this.$store.dispatch('set_music', res.data.data.music)
         })
         .catch((res) => {
           console.log(res)
@@ -47,7 +53,8 @@
     },
     components: {
       'v-header': header,
-      'side-bar': sidebar
+      'side-bar': sidebar,
+      'bottom-bar': bottombar
     },
     methods: {
       list: function (val) {
