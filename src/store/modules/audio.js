@@ -56,7 +56,7 @@ const audioInfo = {
     showMusicInfo (state) {
       state.musicInfoStatus = true
     },
-    hideMusicLInfo (state) {
+    hideMusicInfo (state) {
       state.musicInfoStatus = false
     }
   },
@@ -76,7 +76,7 @@ const audioInfo = {
     show_musicInfo ({commit}) {
       commit('showMusicInfo')
     },
-    hide_musicLInfo ({commit}) {
+    hide_musicInfo ({commit}) {
       commit('hideMusicInfo')
     }
   },

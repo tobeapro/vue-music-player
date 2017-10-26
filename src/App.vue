@@ -23,7 +23,7 @@
     <!--底部音乐-->
     <music-list></music-list>
     <!--播放列表-->
-    <music-info></music-info>
+    <music-detail></music-detail>
     <!--当前播放-->
   </div>
 </template>
@@ -33,7 +33,7 @@
   import sidebar from '@/components/Sidebar'
   import bottombar from '@/components/bottombar'
   import musicList from '@/components/musicList'
-  import musicInfo from '@/components/musicInfo'
+  import musicDetail from '@/components/musicDetail'
   export default {
     name: 'app',
     data: function () {
@@ -63,7 +63,7 @@
       'side-bar': sidebar,
       'bottom-bar': bottombar,
       'music-list': musicList,
-      'music-info': musicInfo
+      'music-detail': musicDetail
     },
     methods: {
       list: function (val) {

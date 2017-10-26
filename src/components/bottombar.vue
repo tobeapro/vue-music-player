@@ -1,7 +1,7 @@
 <template lang="pug">
   div(class="bottom-bar",@click="showMusicInfo")
     div(class="music-info")
-      img(:src="musicInfo.img")
+      img(:src="musicInfo.img",:class="musicStatus?'play':''")
       div(class="music-detail")
         div(class="music-name",v-text="musicInfo.name")
         div(class="music-singer",v-text="musicInfo.singer")
@@ -53,6 +53,13 @@
         width:46px;
         height:46px;
         border-radius:50%;
+        &.play{
+          animation: rotation 6s  linear infinite;
+        }
+        @keyframes  rotation {
+          from {transform:rotate(0)}
+          to {transform:rotate(360deg)}
+        }
       }
       .music-detail{
         margin-left:10px;
