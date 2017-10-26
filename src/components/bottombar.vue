@@ -1,23 +1,33 @@
 <template lang="pug">
-  div(class="bottom-bar")
+  div(class="bottom-bar",@click="showMusicInfo")
     div(class="music-info")
       img(:src="musicInfo.img")
       div(class="music-detail")
         div(class="music-name",v-text="musicInfo.name")
         div(class="music-singer",v-text="musicInfo.singer")
-    div(class="music-play")
-      i(class="fa fa-play-circle-o fa-2x")
-    div(class="music-list")
+    div(class="music-play",@click.stop="playMusic")
+      i(class="fa fa-2x",:class="musicStatus?'fa-pause-circle-o':'fa-play-circle-o'")
+    div(class="music-list",@click.stop="showMusicList")
       i(class="fa fa-list fa-2x")
 </template>
 <script>
   export default {
-    data () {
-      return {
-
+    name: 'bottombar',
+    methods: {
+      playMusic () {
+        this.$store.commit('changePlayStatus')
+      },
+      showMusicList () {
+        this.$store.dispatch('show_musicList')
+      },
+      showMusicInfo () {
+        this.$store.dispatch('show_musicInfo')
       }
     },
     computed: {
+      musicStatus () {
+        return this.$store.getters.getMusicStatus
+      },
       musicInfo () {
         return this.$store.getters.getMusic
       }

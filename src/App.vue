@@ -21,6 +21,10 @@
     <router-view :musiclist="musicList"></router-view>
     <bottom-bar></bottom-bar>
     <!--底部音乐-->
+    <music-list></music-list>
+    <!--播放列表-->
+    <music-info></music-info>
+    <!--当前播放-->
   </div>
 </template>
 
@@ -28,6 +32,8 @@
   import header from '@/components/header'
   import sidebar from '@/components/Sidebar'
   import bottombar from '@/components/bottombar'
+  import musicList from '@/components/musicList'
+  import musicInfo from '@/components/musicInfo'
   export default {
     name: 'app',
     data: function () {
@@ -46,6 +52,7 @@
           this.userInfo = res.data.data
           this.$refs.audio.setAttribute('src', res.data.data.music.url)
           this.$store.dispatch('set_music', res.data.data.music)
+          this.$store.dispatch('set_audioElement', this.$refs.audio)
         })
         .catch((res) => {
           console.log(res)
@@ -54,7 +61,9 @@
     components: {
       'v-header': header,
       'side-bar': sidebar,
-      'bottom-bar': bottombar
+      'bottom-bar': bottombar,
+      'music-list': musicList,
+      'music-info': musicInfo
     },
     methods: {
       list: function (val) {

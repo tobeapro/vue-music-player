@@ -1,6 +1,6 @@
 <template lang="pug">
-  div(class="sidebar",v-show="sideStatus")
-    div(class="sidebar-mask",@click="hideSide")
+  div(class="sidebar")
+    div(class="sidebar-mask",@click="hideSide",v-show="sideStatus")
     transition(name="side-fade")
       div(class="sidebar-content",v-show="sideStatus")
         div(class="user-header")
@@ -116,11 +116,11 @@
       z-index: 11;
       background: #fff;
       overflow-y: auto;
-      &.side-fade-enter-to, &.side-fade-leave-to {
-        transition: transform .3s ease;
+      &.side-fade-enter-active, &.side-fade-leave-active {
+        transition:all .3s ease;
       }
       &.side-fade-enter, &.side-fade-leave-to {
-        transform: translateX(-300px);
+        left: -300px
       }
       .user-header-info{
         display:flex;
