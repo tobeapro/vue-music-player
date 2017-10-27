@@ -5,11 +5,11 @@
       div(class="music-list-part",v-show="listStatus")
         div(class="handle")
           i(class="fa fa-random")
-          span(class="pattern") 随机播放
+          span(class="pattern") 随机播放( {{musicList.length}} )
         ul(class="list")
-          li(class="list-detail",v-for="(item,index) in musicList")
+          li(class="list-detail",v-for="(item,index) in musicList",@click="changeMusic(index)")
             span(class="list-name") {{item.name}}
-            span(class="list-singer") {{item.singer}}
+            span(class="list-singer") ---{{item.singer}}
 </template>
 <script>
   export default {
@@ -17,6 +17,9 @@
     methods: {
       hideSide () {
         this.$store.dispatch('hide_musciList')
+      },
+      changeMusic (num) {
+        this.$store.dispatch('change_music', num)
       }
     },
     computed: {
@@ -55,15 +58,23 @@
         bottom:-300px;
       }
       .handle{
-        height:30px;
-        line-height:30px;
+        padding-left:20px;
+        height:40px;
+        line-height:40px;
         border-bottom:1px solid #ddd;
+        font-size:14px;
+        .fa{
+          margin-right:10px;
+          font-size:16px;
+        }
       }
       .list{
-        height:270px;
+        height:260px;
         overflow-y:auto;
         .list-detail{
-          line-height:24px;
+          padding-left:20px;
+          line-height:30px;
+          border-bottom:1px solid #ddd;
           cursor:pointer;
         }
       }

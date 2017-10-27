@@ -4,7 +4,7 @@
       router-link(to="/helloLink" class="hello-link") click
     router-view
     ul(class="music-ul" v-if="musiclist.length!==0")
-      li(v-for="(value,index) in showlist",class="music-li",@click="playMusic(value.songid)")
+      li(v-for="(value,index) in showlist",class="music-li",@click="playMusic(value)")
         span(v-text="index+1" class="music-li-index")
         span(class="music-li-img")
           img(:src="value.img")
@@ -34,9 +34,9 @@
       }
     },
     methods: {
-      playMusic: (val) => {
-        this.musicUrl = 'http://ws.stream.qqmusic.qq.com/' + val + '.m4a?fromtag=46'
-        console.log(this.musicUrl)
+      playMusic (val) {
+        this.$store.state.audio.audioElement.setAttribute('src', val.url)
+        this.$store.dispatch('play_newMusic', val)
       },
       getList () {
         return this.$props.musiclist.slice((this.pageNow - 1) * this.pageSize, this.pageNow * this.pageSize)

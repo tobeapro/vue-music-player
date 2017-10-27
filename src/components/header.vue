@@ -47,10 +47,12 @@
                 this.searchList = []
                 res.data.data.song.list.forEach(val => {
                   this.searchList.push({
+                    id: val.songid,
                     name: val.songname,
+                    singer: val.singer[0].name,
                     img: 'https://y.gtimg.cn/music/photo_new/T002R150x150M000' + val.albummid + '.jpg?max_age=2592000',
-                    songid: val.songid,
-                    singer: val.singer[0].name
+                    url: 'http://ws.stream.qqmusic.qq.com/' + val.songid + '.m4a?fromtag=46',
+                    lyric: ''
                   })
                 })
                 this.$emit('datadetail', this.searchList)
@@ -60,6 +62,24 @@
             this.searchListState = false
             this.$Message.warning('搜索出错')
             console.log(res)
+            this.$emit('datadetail', [
+            {
+              'id': 449205,
+              'name': '稻香',
+              'singer': '周杰伦',
+              'img': 'https://y.gtimg.cn/music/photo_new/T002R150x150M000002Neh8l0uciQZ.jpg?max_age=2592000',
+              'url': 'http://ws.stream.qqmusic.qq.com/449205.m4a?fromtag=46',
+              'lyric': ''
+            },
+            {
+              'id': 97773,
+              'name': '晴天',
+              'singer': '周杰伦',
+              'img': 'https://y.gtimg.cn/music/photo_new/T002R150x150M000000MkMni19ClKG.jpg?max_age=2592000',
+              'url': 'http://ws.stream.qqmusic.qq.com/97773.m4a?fromtag=46',
+              'lyric': ''
+            }
+            ])
           })
         }
       },
