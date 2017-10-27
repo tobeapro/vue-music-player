@@ -8,6 +8,7 @@
           span(class="pattern") 随机播放( {{musicList.length}} )
         ul(class="list")
           li(class="list-detail",v-for="(item,index) in musicList",@click="changeMusic(index)")
+            i(class="fa",:class="[{'fa-volume-up':index === musicIndex},{'play':playStatus}]")
             span(class="list-name") {{item.name}}
             span(class="list-singer") ---{{item.singer}}
 </template>
@@ -28,6 +29,12 @@
       },
       musicList () {
         return this.$store.getters.getMusicList
+      },
+      musicIndex () {
+        return this.$store.state.audio.musicIndex
+      },
+      playStatus () {
+        return this.$store.state.audio.playStatus
       }
     }
   }
@@ -76,6 +83,14 @@
           line-height:30px;
           border-bottom:1px solid #ddd;
           cursor:pointer;
+          .fa{
+            margin-right:10px;
+            font-weight:bold;
+            font-size:14px;
+            &.play{
+              color:#dc0000;
+            }
+          }
         }
       }
     }

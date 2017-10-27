@@ -71,7 +71,7 @@
     right:0;
     bottom:0;
     z-index:9;
-    background-color:#fff;
+    background-color:#000;
     overflow:hidden;
     &.detail-fade-enter-active,&.detail-fade-leave-active{
       transition:all .2s linear;

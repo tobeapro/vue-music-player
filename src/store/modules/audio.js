@@ -104,10 +104,14 @@ const audioInfo = {
     },
     changeMusic (state, index) {
       if (state.musicIndex === index) {
+        state.playStatus = true
+        state.audioElement.load()
+        state.audioElement.play()
         return
       } else {
         state.musicIndex = index
         state.music = state.musicList[index]
+        state.audioElement.setAttribute('src', state.musicList[index].url)
         state.playStatus = true
         state.audioElement.load()
         state.audioElement.play()
@@ -142,7 +146,7 @@ const audioInfo = {
     play_newMusic ({commit}, obj) {
       commit('playNewMusic', obj)
     },
-    change_music({commit}, index) {
+    change_music ({commit}, index) {
       commit('changeMusic', index)
     }
   },
