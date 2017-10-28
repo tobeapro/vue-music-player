@@ -84,9 +84,11 @@
           border-bottom:1px solid #ddd;
           cursor:pointer;
           .fa{
+            transition:all .6s ease ;
             margin-right:10px;
             font-weight:bold;
             font-size:14px;
+            color:#495060;
             &.play{
               color:#dc0000;
             }
