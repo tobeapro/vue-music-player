@@ -4,8 +4,9 @@
     transition(name="list-fade")
       div(class="music-list-part",v-show="listStatus")
         div(class="handle")
-          i(class="fa fa-random")
-          span(class="pattern") 随机播放( {{musicList.length}} )
+          i(class="fa",:class="[{'fa-refresh':playWay===1},{'fa-random':playWay===2}]",@click="changePlayWay")
+          span(class="pattern",v-if="playWay===1") 列表循环 ( {{musicList.length}} )
+          span(class="pattern",v-if="playWay===2") 随机播放 ( {{musicList.length}} )
         ul(class="list")
           li(class="list-detail",v-for="(item,index) in musicList",@click="changeMusic(index)")
             i(class="fa",:class="[{'fa-volume-up':index === musicIndex},{'play':playStatus}]")
@@ -21,6 +22,9 @@
       },
       changeMusic (num) {
         this.$store.dispatch('change_music', num)
+      },
+      changePlayWay () {
+        this.$store.dispatch('change_playWay')
       }
     },
     computed: {
@@ -35,6 +39,9 @@
       },
       playStatus () {
         return this.$store.state.audio.playStatus
+      },
+      playWay () {
+        return this.$store.state.audio.playWay
       }
     }
   }
@@ -73,6 +80,7 @@
         .fa{
           margin-right:10px;
           font-size:16px;
+          cursor:pointer;
         }
       }
       .list{
@@ -83,6 +91,9 @@
           line-height:30px;
           border-bottom:1px solid #ddd;
           cursor:pointer;
+          &:hover{
+            background:#eee;
+          }
           .fa{
             transition:all .6s ease ;
             margin-right:10px;

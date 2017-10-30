@@ -12,6 +12,7 @@ const audioInfo = {
     audioElement: '',
     playStatus: false,
     musicListStatus: false,
+    playWay: 1,
     musicList: [
       {
         'id': 1249555,
@@ -49,9 +50,22 @@ const audioInfo = {
       }
     },
     playPrevMusic (state) {
-      state.musicIndex--
-      if (state.musicIndex < 0) {
-        state.musicIndex = state.musicList.length - 1
+      let len = state.musicList.length
+      if (state.playWay === 2) {
+        let index = Math.floor(Math.random() * len)
+        if (index === state.musicIndex) {
+          state.musicIndex--
+          if (state.musicIndex < 0) {
+            state.musicIndex = len - 1
+          }
+        } else {
+          state.musicIndex === index
+        }
+      } else {
+        state.musicIndex--
+        if (state.musicIndex < 0) {
+          state.musicIndex = len - 1
+        }
       }
       state.music = state.musicList[state.musicIndex]
       state.audioElement.setAttribute('src', state.musicList[state.musicIndex].url)
@@ -60,9 +74,22 @@ const audioInfo = {
       state.audioElement.play()
     },
     playNextMusic (state) {
-      state.musicIndex++
-      if (state.musicIndex >= state.musicList.length) {
-        state.musicIndex = 0
+      let len = state.musicList.length
+      if (state.playWay === 2) {
+        let index = Math.floor(Math.random() * len)
+        if (index === state.musicIndex) {
+          state.musicIndex++
+          if (state.musicIndex >= len) {
+            state.musicIndex = 0
+          }
+        } else {
+          state.musicIndex = index
+        }
+      } else {
+        state.musicIndex++
+        if (state.musicIndex >= len) {
+          state.musicIndex = 0
+        }
       }
       state.music = state.musicList[state.musicIndex]
       state.audioElement.setAttribute('src', state.musicList[state.musicIndex].url)
@@ -116,6 +143,16 @@ const audioInfo = {
         state.audioElement.load()
         state.audioElement.play()
       }
+    },
+    changePlayWay (state) {
+      let way = state.playWay
+      if (way === 1) {
+        state.playWay = 2
+      } else if (way === 2) {
+        state.playWay = 1
+      } else {
+        return
+      }
     }
   },
   actions: {
@@ -148,6 +185,9 @@ const audioInfo = {
     },
     change_music ({commit}, index) {
       commit('changeMusic', index)
+    },
+    change_playWay ({commit}) {
+      commit('changePlayWay')
     }
   },
   getters: {
