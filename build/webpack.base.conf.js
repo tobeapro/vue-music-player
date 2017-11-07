@@ -25,6 +25,9 @@ module.exports = {
       '@': resolve('src'),
     }
   },
+  externals: {
+    'BMap': 'BMap'
+  },
   module: {
     rules: [
       // {

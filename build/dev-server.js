@@ -90,7 +90,7 @@ module.exports = {
 }
 
 //请求本地数据
-var appData=require('../data.json');
+var appData=require('../static/data.json');
 var apiRoutes=express.Router();
 apiRoutes.get('/',function(req,res){
   res.json({

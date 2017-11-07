@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import Detail from '@/components/Detail'
+import map from '@/components/map'
 Vue.use(Router)
 const helloLink = {
   template: '<div style="text-align:center;font-size:20px;">{{link}}</div>',
@@ -29,7 +30,7 @@ export default new Router({
     {
       path: '/others',
       name: 'others',
-      component: {template: '<div>others</div>'}
+      component: map
     }
   ]
 })
