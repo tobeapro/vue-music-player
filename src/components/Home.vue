@@ -23,14 +23,21 @@
        pageSize: 10
      }
     },
-    props: {
-      musiclist: {
-        type: Array
-      }
-    },
+//    props: {
+//      musiclist: {
+//        type: Array
+//      }
+//    },
     computed: {
+      musiclist () {
+        if (this.$route.params.musicList === undefined) {
+          return []
+        } else {
+        return this.$route.params.musicList
+        }
+      },
       showlist () {
-        return this.$props.musiclist.slice((this.pageNow - 1) * this.pageSize, this.pageNow * this.pageSize)
+        return this.musiclist.slice((this.pageNow - 1) * this.pageSize, this.pageNow * this.pageSize)
       }
     },
     methods: {

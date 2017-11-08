@@ -7,7 +7,7 @@
     <!--左侧栏-->
     <div class="tab">
       <div class="tab-item">
-        <router-link to="/">
+        <router-link :to="{name:'home',params:{musicList:musicList}}">
           <span>首页</span>
         </router-link>
       </div>
@@ -18,7 +18,7 @@
         <router-link to="/others">其他</router-link>
       </div>
     </div>
-    <router-view :musiclist="musicList"></router-view>
+    <router-view></router-view>
     <bottom-bar></bottom-bar>
     <!--底部音乐-->
     <music-list></music-list>
@@ -68,7 +68,7 @@
     methods: {
       list: function (val) {
         this.musicList = val
-        window.location.hash = '/'
+        this.$router.push({path: '/'})
       }
     }
   }
