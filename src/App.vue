@@ -92,6 +92,10 @@ html,body{font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hirag
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   height:100%;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 input,button,textarea,td,th,select{outline:none;}
 table {border-collapse:collapse;border-spacing:0;}
