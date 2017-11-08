@@ -46,6 +46,11 @@
         isSideShow: false
       }
     },
+    watch: {
+      musicList: function () {
+        this.$router.push({path: '/', params: {musicList: this.musicList}})
+      }
+    },
     created: function () {
       this.$axios.get('/user')
         .then((res) => {
@@ -68,7 +73,7 @@
     methods: {
       list: function (val) {
         this.musicList = val
-        this.$router.push({path: '/'})
+//        this.$router.replace({path: '/', params: {musicList: val}})
       }
     }
   }

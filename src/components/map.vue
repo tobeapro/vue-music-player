@@ -1,5 +1,5 @@
 <template>
-  <div id="allmap" style="width:100%;height:200px;"></div>
+  <div id="allmap" class="allmap"></div>
 </template>
 <script>
   import BMap from 'BMap'
@@ -9,7 +9,7 @@
       return {
       }
     },
-    created () {
+    mounted () {
       this.initMap()
     },
     methods: {
@@ -30,5 +30,8 @@
   }
 </script>
 <style>
-
+  .allmap{
+    width:100%;
+    height:100%;
+  }
 </style>

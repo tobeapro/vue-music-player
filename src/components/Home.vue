@@ -31,9 +31,11 @@
     computed: {
       musiclist () {
         if (this.$route.params.musicList === undefined) {
+          console.log('第一次加载')
           return []
         } else {
-        return this.$route.params.musicList
+          console.log('有数据')
+          return this.$route.params.musicList
         }
       },
       showlist () {
