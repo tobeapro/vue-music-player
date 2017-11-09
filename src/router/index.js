@@ -4,8 +4,8 @@ import Home from '@/components/Home'
 import Detail from '@/components/Detail'
 import map from '@/components/map'
 Vue.use(Router)
-const helloLink = {
-  template: '<div style="text-align:center;font-size:20px;">{{link}}</div>',
+const hello = {
+  template: '<div style="position:absolute;left:50%;top:50%;transform: translate(-50%,-50%)">{{link}}</div>',
   data: function () {
     return {
       link: 'this is link'
@@ -19,7 +19,7 @@ export default new Router({
       name: 'home',
       component: Home,
       children: [
-        {path: '/helloLink', name: 'helloLink', component: helloLink}
+        {path: '/hello', name: 'hello', component: hello}
       ]
     },
     {

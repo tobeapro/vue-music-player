@@ -1,7 +1,7 @@
 <template lang="pug">
   div(id="home",class="home")
-    div(class="hello-text" v-if="musiclist.length===0") hello
-      router-link(to="/helloLink" class="hello-link") click
+    div(class="home-text" v-if="musiclist.length===0")
+      router-link(to="/hello" class="hello") click
     router-view
     ul(class="music-ul" v-if="musiclist.length!==0")
       li(v-for="(value,index) in showlist",class="music-li",@click="playMusic(value)")
@@ -67,13 +67,15 @@
     bottom:50px;
     overflow-y:auto;
     background:url("../../static/bg2.png") 0 100px;
-    .hello-text{
-      height:200px;
+    .home-text{
+      height:100%;
       line-height:200px;
       font-size:30px;
       font-weight:bold;
       text-align:center;
       color:#4c39ff;
+      background:url("../../static/bg.png") center 0 no-repeat;
+      background-size:cover;
     }
     .music-ul {
       border-top:1px solid #ccc;
