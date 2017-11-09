@@ -1,8 +1,18 @@
 <template lang="pug">
   div(id="home",class="home")
-    div(class="home-text" v-if="musiclist.length===0")
-      router-link(to="/hello" class="hello") click
-    router-view
+    div(class="home-default" v-if="musiclist.length===0")
+      swiper(:options="swiperOption",:not-next-tick="notNextTick",ref="mySwiper")
+        swiper-slide() I'm Slide 1
+        swiper-slide() I'm Slide 2
+        swiper-slide() I'm Slide 3
+        swiper-slide() I'm Slide 4
+        swiper-slide() I'm Slide 5
+        swiper-slide() I'm Slide 6
+        swiper-slide() I'm Slide 7
+        div(class="swiper-pagination",slot="pagination")
+        div(class="swiper-button-prev",slot="button-prev")
+        div(class="swiper-button-next",slot="button-next")
+        div(class="swiper-scrollbar",slot="scrollbar")
     ul(class="music-ul" v-if="musiclist.length!==0")
       li(v-for="(value,index) in showlist",class="music-li",@click="playMusic(value)")
         span(v-text="index+1" class="music-li-index")
@@ -14,29 +24,56 @@
 </template>
 
 <script>
+  import Vue from 'vue'
+  import VueSwiper from 'vue-awesome-swiper'
+  Vue.use(VueSwiper)
   export default{
     name: 'home',
     data () {
      return {
        musicUrl: '',
        pageNow: 1,
-       pageSize: 10
+       pageSize: 10,
+       notNextTick: true,
+       swiperOption: {
+         // swiper options 所有的配置同swiper官方api配置
+         autoplay: 3000,
+         direction: 'vertical',
+         grabCursor: true,
+         setWrapperSize: true,
+         autoHeight: true,
+         pagination: '.swiper-pagination',
+         paginationClickable: true,
+         prevButton: '.swiper-button-prev',
+         nextButton: '.swiper-button-next',
+         scrollbar: '.swiper-scrollbar',
+         mousewheelControl: true,
+         observeParents: true,
+         // if you need use plugins in the swiper, you can config in here like this
+         // 如果自行设计了插件，那么插件的一些配置相关参数，也应该出现在这个对象中，如下debugger
+         debugger: true,
+         // swiper callbacks
+         // swiper的各种回调函数也可以出现在这个对象中，和swiper官方一样
+         onTransitionStart (swiper) {
+           console.log(swiper)
+         }
+         // more Swiper configs and callbacks...
+         // ...
+       }
      }
     },
-//    props: {
-//      musiclist: {
-//        type: Array
-//      }
-//    },
+    mounted () {
+      // you can use current swiper instance object to do something(swiper methods)
+      // 然后你就可以使用当前上下文内的swiper对象去做你想做的事了
+      console.log('this is current swiper instance object', this.swiper)
+      this.swiper.slideTo(3, 1000, false)
+    },
     computed: {
+      swiper () {
+        return this.$refs.mySwiper.swiper
+      },
       musiclist () {
-        if (this.$route.params.musicList === undefined) {
-          console.log('第一次加载')
-          return []
-        } else {
-          console.log('有数据')
-          return this.$route.params.musicList
-        }
+        return this.$store.state.audio.searchMusicList
       },
       showlist () {
         return this.musiclist.slice((this.pageNow - 1) * this.pageSize, this.pageNow * this.pageSize)
@@ -66,16 +103,11 @@
     right:0;
     bottom:50px;
     overflow-y:auto;
-    background:url("../../static/bg2.png") 0 100px;
-    .home-text{
-      height:100%;
-      line-height:200px;
+    background:url("../../static/bg2.png") center -30px no-repeat;
+    .home-default{
       font-size:30px;
       font-weight:bold;
       text-align:center;
-      color:#4c39ff;
-      background:url("../../static/bg.png") center 0 no-repeat;
-      background-size:cover;
     }
     .music-ul {
       border-top:1px solid #ccc;

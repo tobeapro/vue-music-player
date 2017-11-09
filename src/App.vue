@@ -1,13 +1,13 @@
 <template>
   <div class="app">
     <audio ref="audio"></audio>
-    <v-header :user="userInfo" @datadetail="list"></v-header>
+    <v-header :user="userInfo" @datadetail="searchList"></v-header>
     <!--头部-->
     <side-bar :user="userInfo"></side-bar>
     <!--左侧栏-->
     <div class="tab">
       <div class="tab-item">
-        <router-link :to="{name:'home',params:{musicList:musicList}}">
+        <router-link to="/">
           <span>首页</span>
         </router-link>
       </div>
@@ -47,8 +47,8 @@
       }
     },
     watch: {
-      musicList: function () {
-        this.$router.push({path: '/', params: {musicList: this.musicList}})
+      musicList: function (val) {
+        this.$store.dispatch('search_music', val)
       }
     },
     created: function () {
@@ -71,9 +71,9 @@
       'music-detail': musicDetail
     },
     methods: {
-      list: function (val) {
+      searchList: function (val) {
         this.musicList = val
-//        this.$router.replace({path: '/', params: {musicList: val}})
+        this.$router.push({path: '/'})
       }
     }
   }

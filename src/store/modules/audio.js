@@ -1,5 +1,6 @@
 const audioInfo = {
   state: {
+    searchMusicList: [],
     music: {
       id: 0,
       name: '',
@@ -34,6 +35,9 @@ const audioInfo = {
     musicInfoStatus: false
   },
   mutations: {
+    searchMusic (state, ary) {
+      state.searchMusicList = ary
+    },
     setAudioElement (state, ele) {
       state.audioElement = ele
     },
@@ -156,6 +160,9 @@ const audioInfo = {
     }
   },
   actions: {
+    search_music ({commit}, ary) {
+      commit('searchMusic', ary)
+    },
     set_audioElement ({commit}, ele) {
       commit('setAudioElement', ele)
     },
