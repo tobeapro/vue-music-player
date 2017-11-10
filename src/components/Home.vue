@@ -36,12 +36,10 @@
        pageSize: 10,
        notNextTick: true,
        swiperOption: {
-         // swiper options 所有的配置同swiper官方api配置
          autoplay: 3000,
-         direction: 'vertical',
+         direction: 'horizontal',
          grabCursor: true,
          setWrapperSize: true,
-         autoHeight: true,
          pagination: '.swiper-pagination',
          paginationClickable: true,
          prevButton: '.swiper-button-prev',
@@ -49,24 +47,12 @@
          scrollbar: '.swiper-scrollbar',
          mousewheelControl: true,
          observeParents: true,
-         // if you need use plugins in the swiper, you can config in here like this
-         // 如果自行设计了插件，那么插件的一些配置相关参数，也应该出现在这个对象中，如下debugger
          debugger: true,
-         // swiper callbacks
-         // swiper的各种回调函数也可以出现在这个对象中，和swiper官方一样
          onTransitionStart (swiper) {
            console.log(swiper)
          }
-         // more Swiper configs and callbacks...
-         // ...
        }
      }
-    },
-    mounted () {
-      // you can use current swiper instance object to do something(swiper methods)
-      // 然后你就可以使用当前上下文内的swiper对象去做你想做的事了
-      console.log('this is current swiper instance object', this.swiper)
-      this.swiper.slideTo(3, 1000, false)
     },
     computed: {
       swiper () {
@@ -105,9 +91,30 @@
     overflow-y:auto;
     background:url("../../static/bg2.png") center -30px no-repeat;
     .home-default{
+      position:relative;
+      height:100%;
       font-size:30px;
       font-weight:bold;
       text-align:center;
+      background:#fff;
+      .swiper-container{
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        height:100%;
+        overflow: hidden;
+        z-index: 1;
+        .swiper-wrapper{
+          height:100%;
+          .swiper-slide{
+            display:flex;
+            float:left;
+            height:100%;
+            align-items: center;
+            justify-content: center;
+          }
+        }
+      }
     }
     .music-ul {
       border-top:1px solid #ccc;

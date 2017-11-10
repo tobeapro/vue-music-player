@@ -7,6 +7,7 @@ import axios from 'axios'
 import iview from 'iview'
 import 'iview/dist/styles/iview.css'
 import 'font-awesome/css/font-awesome.min.css'
+import './assets/css/swiper.css'
 import Vuex from 'vuex'
 import store from './store'
 Vue.use(Vuex)
