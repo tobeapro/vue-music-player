@@ -1,26 +1,16 @@
 <template lang="pug">
   div(id="home",class="home")
-    div(class="home-default" v-if="musiclist.length===0")
-      swiper(:options="swiperOption",:not-next-tick="notNextTick",ref="mySwiper")
-        swiper-slide() I'm Slide 1
-        swiper-slide() I'm Slide 2
-        swiper-slide() I'm Slide 3
-        swiper-slide() I'm Slide 4
-        swiper-slide() I'm Slide 5
-        swiper-slide() I'm Slide 6
-        swiper-slide() I'm Slide 7
-        div(class="swiper-pagination",slot="pagination")
-        div(class="swiper-button-prev",slot="button-prev")
-        div(class="swiper-button-next",slot="button-next")
-        div(class="swiper-scrollbar",slot="scrollbar")
-    ul(class="music-ul" v-if="musiclist.length!==0")
+    div(class="home-default",v-if="musicList.length===0",ref="home")
+      div(class="home-text") Welcome
+      canvas(width="100%",height="100%",ref="myCanvas")
+    ul(class="music-ul" v-if="musicList.length!==0")
       li(v-for="(value,index) in showlist",class="music-li",@click="playMusic(value)")
         span(v-text="index+1" class="music-li-index")
         span(class="music-li-img")
           img(:src="value.img")
         span(v-text="value.name" class="music-li-name")
         span(v-text="value.singer" class="music-li-singer")
-    Page(:total="musiclist.length",:current="pageNow",:page-size="pageSize",@on-change="changePage",v-if="musiclist.length > pageSize")
+    Page(:total="musicList.length",:current="pageNow",:page-size="pageSize",@on-change="changePage",v-if="musicList.length > pageSize")
 </template>
 
 <script>
@@ -34,31 +24,38 @@
        musicUrl: '',
        pageNow: 1,
        pageSize: 10,
-       notNextTick: true,
-       swiperOption: {
-         autoplay: 3000,
-         direction: 'horizontal',
-         grabCursor: true,
-         setWrapperSize: true,
-         pagination: '.swiper-pagination',
-         paginationClickable: true,
-         prevButton: '.swiper-button-prev',
-         nextButton: '.swiper-button-next',
-         scrollbar: '.swiper-scrollbar',
-         mousewheelControl: true,
-         observeParents: true,
-         debugger: true,
-         onTransitionStart (swiper) {
-           console.log(swiper)
-         }
-       }
+       homeWidth: document.body.clientWidth,
+       homeHeight: document.body.clientHeight - 152,
+       ballNum: 50,
+       ballTime: 500,
+       color: ['rgb(70,222,222)', 'rgb(30,200,100)', 'rgb(238,20,130)', 'rgb(43,35,94)', 'rgb(255,200,100)', 'rgb(64,195,129)', 'rgb(5,11,250)', 'rgb(100,250,100)', 'rgb(0,255,255)', 'rgb(255,195,0)']
      }
     },
-    computed: {
-      swiper () {
-        return this.$refs.mySwiper.swiper
+    mounted () {
+      window.onresize = () => {
+        return (() => {
+          console.log(1)
+          this.homeWidth = document.body.clientWidth
+          this.homeHeight = document.body.clientHeight - 152
+        })()
+      }
+      this.move()
+    },
+    watch: {
+      homeWidth (val) {
+        this.homeWidth = val
       },
-      musiclist () {
+      homeHeight (val) {
+        this.homeHeight = val
+      }
+    },
+    computed: {
+      myCanvas () {
+         this.$refs.myCanvas.width = this.homeWidth
+         this.$refs.myCanvas.height = this.homeHeight
+          return this.$refs.myCanvas
+      },
+      musicList () {
         return this.$store.state.audio.searchMusicList
       },
       showlist () {
@@ -66,6 +63,22 @@
       }
     },
     methods: {
+      move () {
+        setInterval(() => {
+          this.draw(this.myCanvas)
+        }, this.ballTime)
+      },
+      draw (el) {
+         let ele = el.getContext('2d')
+          ele.clearRect(0, 0, this.myCanvas.width, this.myCanvas.height)
+          for (let i = 0; i < this.ballNum; i++) {
+            ele.beginPath()
+            ele.fillStyle = this.color[Math.floor(Math.random() * this.color.length)]
+            ele.arc(Math.random() * this.myCanvas.width, Math.random() * this.myCanvas.height, 5, 0, 2 * Math.PI)
+            ele.fill()
+            ele.closePath()
+          }
+      },
       playMusic (val) {
         this.$store.state.audio.audioElement.setAttribute('src', val.url)
         this.$store.dispatch('play_newMusic', val)
@@ -97,23 +110,12 @@
       font-weight:bold;
       text-align:center;
       background:#fff;
-      .swiper-container{
-        margin-left: auto;
-        margin-right: auto;
-        position: relative;
-        height:100%;
-        overflow: hidden;
-        z-index: 1;
-        .swiper-wrapper{
-          height:100%;
-          .swiper-slide{
-            display:flex;
-            float:left;
-            height:100%;
-            align-items: center;
-            justify-content: center;
-          }
-        }
+      overflow:hidden;
+      .home-text{
+        position:absolute;
+        left:50%;
+        top:50%;
+        transform:translate(-50%,-50%);
       }
     }
     .music-ul {

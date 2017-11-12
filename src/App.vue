@@ -117,6 +117,7 @@ input[disabled], select[disabled]{
 }
 .app{
   height:100%;
+
 }
 .app .tab{
   display:flex;
@@ -125,7 +126,6 @@ input[disabled], select[disabled]{
   line-height:40px;
   font-size:14px;
   font-weight:bold;
-  background:#fff;
 }
 .app .tab-item{
   flex:1;
