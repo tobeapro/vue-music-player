@@ -2,14 +2,14 @@
   div(id="home",class="home")
     div(class="home-default",v-if="musicList.length===0",ref="home")
       div(class="home-text") Welcome
-      canvas(width="100%",height="100%",ref="myCanvas")
-    ul(class="music-ul" v-if="musicList.length!==0")
+      canvas(:width="homeWidth",:height="homeHeight",ref="myCanvas")
+    ul(class="music-ul",v-if="musicList.length!==0")
       li(v-for="(value,index) in showlist",class="music-li",@click="playMusic(value)")
-        span(v-text="index+1" class="music-li-index")
+        span(v-text="index+1",class="music-li-index")
         span(class="music-li-img")
           img(:src="value.img")
-        span(v-text="value.name" class="music-li-name")
-        span(v-text="value.singer" class="music-li-singer")
+        span(v-text="value.name",class="music-li-name")
+        span(v-text="value.singer",class="music-li-singer")
     Page(:total="musicList.length",:current="pageNow",:page-size="pageSize",@on-change="changePage",v-if="musicList.length > pageSize")
 </template>
 
@@ -34,7 +34,6 @@
     mounted () {
       window.onresize = () => {
         return (() => {
-          console.log(1)
           this.homeWidth = document.body.clientWidth
           this.homeHeight = document.body.clientHeight - 152
         })()
@@ -59,7 +58,7 @@
         return this.$store.state.audio.searchMusicList
       },
       showlist () {
-        return this.musiclist.slice((this.pageNow - 1) * this.pageSize, this.pageNow * this.pageSize)
+        return this.musicList.slice((this.pageNow - 1) * this.pageSize, this.pageNow * this.pageSize)
       }
     },
     methods: {
