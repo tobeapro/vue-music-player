@@ -71,11 +71,12 @@
             i(class="fa fa-info")
             span 关于
           i(class="split-border")
-        div(class="user-footer")
+        div(class="user-footer",@click="get()")
           span(class="text") 退出登录
 </template>
 
 <script>
+  import qs from 'qs'
   export default {
     name: 'sidebar',
     props: {
@@ -93,12 +94,21 @@
         this.$store.dispatch('hideSideBar')
       },
       save () {
-        this.$axios.post('/api/customer/save', {'name': 'admin', 'pwd': '123asd', 'uId': 123123})
+        this.$axios.post('/db/customer/save', qs.stringify({'name': 'admin', 'pwd': '123asd', 'uId': 123123}))
           .then((res) => {
           console.log(res)
           })
           .catch((err) => {
             console.log(err)
+          })
+      },
+      get () {
+        this.$axios.get('/db/customer/find')
+          .then((res) => {
+            console.log(res)
+          })
+          .catch((res) => {
+            console.log(res)
           })
       }
     }

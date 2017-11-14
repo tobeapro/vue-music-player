@@ -118,4 +118,4 @@ app.use(bodyParser.urlencoded({ extended: false })) // parse application/x-www-f
 app.use(bodyParser.json()) // parse application/json
 
 const api = require('../servers/index.js')(apiRoutes)
-app.use('/api',apiRoutes)
+app.use('/db',apiRoutes)

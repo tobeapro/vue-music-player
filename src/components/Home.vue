@@ -52,7 +52,7 @@
       myCanvas () {
          this.$refs.myCanvas.width = this.homeWidth
          this.$refs.myCanvas.height = this.homeHeight
-          return this.$refs.myCanvas
+         return this.$refs.myCanvas
       },
       musicList () {
         return this.$store.state.audio.searchMusicList
@@ -83,7 +83,7 @@
         this.$store.dispatch('play_newMusic', val)
       },
       getList () {
-        return this.$props.musiclist.slice((this.pageNow - 1) * this.pageSize, this.pageNow * this.pageSize)
+        return this.musicList.slice((this.pageNow - 1) * this.pageSize, this.pageNow * this.pageSize)
       },
       changePage (val) {
         this.pageNow = val

@@ -1,7 +1,4 @@
-# v1
-
-> A Vue.js project
-
+# vue-player
 ## Build Setup
 
 ``` bash
