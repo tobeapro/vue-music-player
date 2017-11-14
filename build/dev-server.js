@@ -12,7 +12,7 @@ var webpack = require('webpack')
 var proxyMiddleware = require('http-proxy-middleware')
 var webpackConfig = require('./webpack.dev.conf')
 
-// default port where dev server listens for incoming traffic
+// default port where dev servers listens for incoming traffic
 var port = process.env.PORT || config.dev.port
 // automatically open browser, if not set will be false
 var autoOpenBrowser = !!config.dev.autoOpenBrowser
@@ -70,7 +70,7 @@ var readyPromise = new Promise(resolve => {
   _resolve = resolve
 })
 
-console.log('> Starting dev server...')
+console.log('> Starting dev servers...')
 devMiddleware.waitUntilValid(() => {
   console.log('> Listening at ' + uri + '\n')
   // when env is testing, don't need open it
@@ -111,3 +111,11 @@ apiRoutes.get('/musicList2',function(req,res){
   })
 })
 app.use('/user',apiRoutes)
+
+//Mongodb配置
+var bodyParser = require('body-parser')  //使用body-parser，对json数据处理，可在后面配置router接口的时候，对req和res进行数据处理
+app.use(bodyParser.urlencoded({ extended: false })) // parse application/x-www-form-urlencoded
+app.use(bodyParser.json()) // parse application/json
+
+const api = require('../servers/index.js')(apiRoutes)
+app.use('/api',apiRoutes)

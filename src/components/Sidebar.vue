@@ -11,7 +11,7 @@
               span(class="name",v-text="user.userName")
               span(class="lv") lv7
             div(class="user-header-sign")
-              span(class="sign")
+              span(class="sign",@click="save()")
                 i(class="fa fa-flag",aria-hidden="true")
                 span 签到
           div(class="user-header-info")
@@ -91,6 +91,15 @@
     methods: {
       hideSide () {
         this.$store.dispatch('hideSideBar')
+      },
+      save () {
+        this.$axios.post('/api/customer/save', {'name': 'admin', 'pwd': '123asd', 'uId': 123123})
+          .then((res) => {
+          console.log(res)
+          })
+          .catch((err) => {
+            console.log(err)
+          })
       }
     }
   }
