@@ -2,7 +2,7 @@
     <div id="header" class="header">
       <i class="icon" @click="showSide">
         <img width="40" src="../../static/icon.png">
-        <span class="title_text">云音乐</span>
+        <span class="title_text">MUSIC</span>
       </i>
       <div class="search_text">
         <Spin size="large" fix v-if="searchListState"></Spin>

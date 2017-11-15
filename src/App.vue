@@ -62,6 +62,10 @@
         .catch((res) => {
           console.log(res)
         })
+      if (window.localStorage.getItem('musicList') !== null) {
+        console.log(JSON.parse(window.localStorage.getItem('musicList')))
+        this.$store.state.audio.musicList = JSON.parse(window.localStorage.getItem('musicList'))
+      }
     },
     components: {
       'v-header': header,

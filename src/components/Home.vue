@@ -32,13 +32,17 @@
      }
     },
     mounted () {
-      window.onresize = () => {
-        return (() => {
-          this.homeWidth = document.body.clientWidth
-          this.homeHeight = document.body.clientHeight - 152
-        })()
+      if (this.musicList.length !== 0) {
+        return
+      } else {
+        window.onresize = () => {
+          return (() => {
+            this.homeWidth = document.body.clientWidth
+            this.homeHeight = document.body.clientHeight - 152
+          })()
+        }
+        this.move()
       }
-      this.move()
     },
     watch: {
       homeWidth (val) {
@@ -50,8 +54,6 @@
     },
     computed: {
       myCanvas () {
-         this.$refs.myCanvas.width = this.homeWidth
-         this.$refs.myCanvas.height = this.homeHeight
          return this.$refs.myCanvas
       },
       musicList () {
@@ -81,6 +83,7 @@
       playMusic (val) {
         this.$store.state.audio.audioElement.setAttribute('src', val.url)
         this.$store.dispatch('play_newMusic', val)
+        window.localStorage.setItem('musicList', JSON.stringify(this.$store.state.audio.musicList))
       },
       getList () {
         return this.musicList.slice((this.pageNow - 1) * this.pageSize, this.pageNow * this.pageSize)
