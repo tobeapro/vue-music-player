@@ -9,6 +9,8 @@ const audioInfo = {
       url: '',
       lyric: ''
     },
+    musicCurrentTime: 0,
+    musicDurationTime: 0,
     musicIndex: 0,
     audioElement: '',
     playStatus: false,
@@ -157,6 +159,12 @@ const audioInfo = {
       } else {
         return
       }
+    },
+    setMusicCurrentTime (state, obj) {
+      state.musicCurrentTime = obj.currentTime
+    },
+    setMusicDurationTime (state, obj) {
+      state.musicDurationTime = obj.duration
     }
   },
   actions: {
@@ -195,6 +203,12 @@ const audioInfo = {
     },
     change_playWay ({commit}) {
       commit('changePlayWay')
+    },
+    set_musicCurrentTime ({commit}, obj) {
+      commit('setMusicCurrentTime', obj)
+    },
+    set_musicDurationTime ({commit}, obj) {
+      commit('setMusicDurationTime', obj)
     }
   },
   getters: {
@@ -206,6 +220,12 @@ const audioInfo = {
     },
     getMusicList (state) {
       return state.musicList
+    },
+    getMusicCurrentTime (state) {
+      return state.musicCurrentTime
+    },
+    getMusicDurationTime (state) {
+      return state.musicDurationTime
     }
   }
 }

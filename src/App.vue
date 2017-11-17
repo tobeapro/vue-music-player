@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <audio ref="audio"></audio>
+    <audio ref="audio" @canplay="musicCanPlay"></audio>
     <v-header :user="userInfo" @datadetail="searchList"></v-header>
     <!--头部-->
     <side-bar :user="userInfo"></side-bar>
@@ -78,6 +78,10 @@
       searchList: function (val) {
         this.musicList = val
         this.$router.push({path: '/'})
+      },
+      musicCanPlay () {
+        this.$store.dispatch('set_musicCurrentTime', this.$refs.audio)
+        this.$store.dispatch('set_musicDurationTime', this.$refs.audio)
       }
     }
   }

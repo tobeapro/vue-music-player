@@ -20,6 +20,12 @@
                 i(class="fa fa-commenting-o")
               div(class="music-handle-item")
                 i(class="fa fa-bars")
+            div(class="music-process",ref="range",@mouseleave.stop="musicUp")
+              div(class="music-currentime") {{musicCurrentTime}}
+              div(class="music-durationTime") {{musicDurationTime}}
+              div(class="music-range",)
+              div(class="music-played",ref="progress")
+              div(class="music-ball",ref="ball",@mousedown.stop="musicDown",@mousemove.stop="musicMove($event)",@mouseup.stop="musicUp",@mouseleave.stop="musicUp")
         div(class="music-switch")
           div(class="music-switch-item")
             i(class="fa",:class="[{'fa-refresh':playWay===1},{'fa-random':playWay===2}]",@click="changePlayWay")
@@ -35,6 +41,11 @@
 <script>
   export default {
     name: 'music-detail',
+    data () {
+      return {
+        moveStatus: false
+      }
+    },
     computed: {
       musicInfoStatus () {
         return this.$store.state.audio.musicInfoStatus
@@ -47,6 +58,12 @@
       },
       playWay () {
         return this.$store.state.audio.playWay
+      },
+      musicCurrentTime () {
+        return isNaN(this.$store.getters.getMusicCurrentTime) ? 0 : this.$store.getters.getMusicCurrentTime
+      },
+      musicDurationTime () {
+        return isNaN(this.$store.getters.getMusicDurationTime) ? 0 : this.$store.getters.getMusicDurationTime
       }
     },
     methods: {
@@ -67,6 +84,25 @@
       },
       changePlayWay () {
         this.$store.dispatch('change_playWay')
+      },
+      musicDown () {
+        this.moveStatus = true
+      },
+      musicMove (e) {
+        if (this.moveStatus) {
+          let e = e || window.event
+          let pageX = e.pageX
+          let left = this.$refs.range.offsetLeft
+          let width = this.$refs.range.offsetWidth
+          let site = ((pageX - left - this.$refs.ball.offsetWidth / 2) / width * 100).toFixed(2)
+          site = site > 100 ? 100 : site
+          site = site < 0 ? 0 : site
+          this.$refs.ball.style.left = 'calc(' + site + '%)'
+          this.$refs.progress.style.width = 'calc(' + site + '%)'
+        }
+      },
+      musicUp () {
+        this.moveStatus = false
       }
     }
   }
@@ -117,10 +153,8 @@
         left:0;
         right:0;
         bottom:60px;
-        margin:0 20px;
         overflow:hidden;
         border-top:1px solid #fff;
-        border-bottom:1px solid #fff;
         .music-play-show{
           transform: rotate(-20deg);
           transform-origin:0 0;
@@ -178,6 +212,57 @@
             .fa{
               cursor:pointer;
             }
+          }
+        }
+        .music-process{
+          position:absolute;
+          bottom:6px;
+          left:40px;
+          right:40px;
+          height:6px;
+          cursor:pointer;
+          .music-currentime{
+             position:absolute;
+             left:-40px;
+             top:-6px;
+             width:40px;
+             line-height:20px;
+             text-align: center;
+           }
+          .music-durationTime{
+            position:absolute;;
+            right:-40px;
+            top:-6px;
+            width:40px;
+            line-height:20px;
+            text-align: center;
+          }
+          .music-range{
+            position:absolute;
+            top:2px;
+            left:0;
+            width:100%;
+            height:2px;
+            background:#fff;
+          }
+          .music-played{
+            position:absolute;
+            top:2px;
+            left:0;
+            width:10px;
+            height:2px;
+            background:#dc0000;
+          }
+          .music-ball{
+            position:absolute;
+            bottom:-4px;
+            left:0;
+            width:12px;
+            height:12px;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;
+            background: #fff;
           }
         }
       }
