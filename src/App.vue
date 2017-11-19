@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <audio ref="audio" @canplay="musicCanPlay"></audio>
+    <audio ref="audio" @canplay="musicCanPlay" @timeupdate="musicUpdate"></audio>
     <v-header :user="userInfo" @datadetail="searchList"></v-header>
     <!--头部-->
     <side-bar :user="userInfo"></side-bar>
@@ -62,10 +62,10 @@
         .catch((res) => {
           console.log(res)
         })
-      if (window.localStorage.getItem('musicList') !== null) {
-        console.log(JSON.parse(window.localStorage.getItem('musicList')))
-        this.$store.state.audio.musicList = JSON.parse(window.localStorage.getItem('musicList'))
-      }
+//      if (window.localStorage.getItem('musicList') !== null) {
+//        console.log(JSON.parse(window.localStorage.getItem('musicList')))
+//        this.$store.state.audio.musicList = JSON.parse(window.localStorage.getItem('musicList'))
+//      }
     },
     components: {
       'v-header': header,
@@ -82,6 +82,9 @@
       musicCanPlay () {
         this.$store.dispatch('set_musicCurrentTime', this.$refs.audio)
         this.$store.dispatch('set_musicDurationTime', this.$refs.audio)
+      },
+      musicUpdate () {
+        this.$store.dispatch('set_musicCurrentTime', this.$refs.audio)
       }
     }
   }

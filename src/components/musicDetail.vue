@@ -21,8 +21,8 @@
               div(class="music-handle-item")
                 i(class="fa fa-bars")
             div(class="music-process",ref="range",@mouseleave.stop="musicUp")
-              div(class="music-currentime") {{musicCurrentTime}}
-              div(class="music-durationTime") {{musicDurationTime}}
+              div(class="music-currentime") {{musicCurrentTime | timeFilter}}
+              div(class="music-durationTime") {{musicDurationTime | timeFilter}}
               div(class="music-range",)
               div(class="music-played",ref="progress")
               div(class="music-ball",ref="ball",@mousedown.stop="musicDown",@mousemove.stop="musicMove($event)",@mouseup.stop="musicUp",@mouseleave.stop="musicUp")
@@ -103,6 +103,13 @@
       },
       musicUp () {
         this.moveStatus = false
+      }
+    },
+    filters: {
+      timeFilter (time) {
+        let minute = Math.floor(time / 60) > 9 ? Math.floor(time / 60) : '0' + Math.floor(time / 60)
+        let second = Math.floor(time % 60) > 9 ? Math.floor(time % 60) : '0' + Math.floor(time % 60)
+        return minute + ':' + second
       }
     }
   }

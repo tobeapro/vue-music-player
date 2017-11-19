@@ -83,7 +83,7 @@
       playMusic (val) {
         this.$store.state.audio.audioElement.setAttribute('src', val.url)
         this.$store.dispatch('play_newMusic', val)
-        window.localStorage.setItem('musicList', JSON.stringify(this.$store.state.audio.musicList))
+//        window.localStorage.setItem('musicList', JSON.stringify(this.$store.state.audio.musicList))
       },
       getList () {
         return this.musicList.slice((this.pageNow - 1) * this.pageSize, this.pageNow * this.pageSize)
