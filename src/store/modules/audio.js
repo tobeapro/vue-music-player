@@ -160,6 +160,12 @@ const audioInfo = {
         return
       }
     },
+    removeMusic (state, index) {
+      let musicList = state.musicList
+      musicList.splice(index, 1)
+      state.music = musicList[index]
+      state.audioElement.setAttribute('src', musicList[index].url)
+    },
     setMusicCurrentTime (state, obj) {
       state.musicCurrentTime = obj.currentTime
     },
@@ -203,6 +209,9 @@ const audioInfo = {
     },
     change_playWay ({commit}) {
       commit('changePlayWay')
+    },
+    remove_music ({commit}, index) {
+      commit('removeMusic', index)
     },
     set_musicCurrentTime ({commit}, obj) {
       commit('setMusicCurrentTime', obj)

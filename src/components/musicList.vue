@@ -12,6 +12,7 @@
             i(class="fa",:class="[{'fa-volume-up':index === musicIndex},{'play':playStatus}]")
             span(class="list-name") {{item.name}}
             span(class="list-singer") ---{{item.singer}}
+            i(class="fa fa-trash remove",@click.stop="removeMusic(index)")
 </template>
 <script>
   export default {
@@ -25,6 +26,9 @@
       },
       changePlayWay () {
         this.$store.dispatch('change_playWay')
+      },
+      removeMusic (index) {
+        this.$store.dispatch('remove_music', index)
       }
     },
     computed: {
@@ -101,6 +105,14 @@
             font-size:14px;
             color:#495060;
             &.play{
+              color:#dc0000;
+            }
+          }
+          .remove{
+            float:right;
+            margin-right:20px;
+            line-height:30px;
+            &:hover{
               color:#dc0000;
             }
           }
