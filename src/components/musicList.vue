@@ -8,11 +8,11 @@
           span(class="pattern",v-if="playWay===1") 列表循环 ( {{musicList.length}} )
           span(class="pattern",v-if="playWay===2") 随机播放 ( {{musicList.length}} )
         ul(class="list")
-          li(class="list-detail",v-for="(item,index) in musicList",@click="changeMusic(index)")
+          li(class="list-detail",v-for="(item,index) in musicList",@click="changeMusic(index)",:key="index")
             i(class="fa",:class="[{'fa-volume-up':index === musicIndex},{'play':playStatus}]")
             span(class="list-name") {{item.name}}
             span(class="list-singer") ---{{item.singer}}
-            i(class="fa fa-trash remove",@click.stop="removeMusic(index)")
+            i(class="fa fa-trash remove",@click.stop="removeMusic(index,musicIndex)",v-if="musicList.length > 1")
 </template>
 <script>
   export default {
@@ -27,8 +27,12 @@
       changePlayWay () {
         this.$store.dispatch('change_playWay')
       },
-      removeMusic (index) {
-        this.$store.dispatch('remove_music', index)
+      removeMusic (index, playIndex) {
+        this.$store.dispatch({
+          type: 'remove_music',
+          index: index,
+          playIndex: playIndex
+        })
       }
     },
     computed: {
