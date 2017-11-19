@@ -215,6 +215,9 @@ const audioInfo = {
     getMusic (state) {
       return state.music
     },
+    getAudioElement (state) {
+      return state.audioElement
+    },
     getMusicStatus (state) {
       return state.playStatus
     },

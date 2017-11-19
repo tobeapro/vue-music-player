@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <audio ref="audio" @canplay="musicCanPlay" @timeupdate="musicUpdate"></audio>
+    <audio ref="audio" @canplay="musicCanPlay" @timeupdate="musicUpdate" @ended="musicNext"></audio>
     <v-header :user="userInfo" @datadetail="searchList"></v-header>
     <!--头部-->
     <side-bar :user="userInfo"></side-bar>
@@ -85,6 +85,9 @@
       },
       musicUpdate () {
         this.$store.dispatch('set_musicCurrentTime', this.$refs.audio)
+      },
+      musicNext () {
+        this.$store.dispatch('play_nextMusic')
       }
     }
   }

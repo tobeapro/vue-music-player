@@ -23,9 +23,9 @@
             div(class="music-process",ref="range",@mouseleave.stop="musicUp")
               div(class="music-currentime") {{musicCurrentTime | timeFilter}}
               div(class="music-durationTime") {{musicDurationTime | timeFilter}}
-              div(class="music-range",)
-              div(class="music-played",ref="progress")
-              div(class="music-ball",ref="ball",@mousedown.stop="musicDown",@mousemove.stop="musicMove($event)",@mouseup.stop="musicUp",@mouseleave.stop="musicUp")
+              div(class="music-range")
+              div(class="music-played",ref="progress",:style="{width:playedWidth}")
+              div(class="music-ball",ref="ball",:style="{left:playedWidth}",@mousedown.stop="musicDown",@mousemove.stop="musicMove($event)",@mouseup.stop="musicUp",@mouseleave.stop="musicUp")
         div(class="music-switch")
           div(class="music-switch-item")
             i(class="fa",:class="[{'fa-refresh':playWay===1},{'fa-random':playWay===2}]",@click="changePlayWay")
@@ -64,6 +64,13 @@
       },
       musicDurationTime () {
         return isNaN(this.$store.getters.getMusicDurationTime) ? 0 : this.$store.getters.getMusicDurationTime
+      },
+      playedWidth () {
+        if (!this.moveStatus) {
+          return (this.$store.getters.getMusicCurrentTime / this.$store.getters.getMusicDurationTime * 100).toFixed(2) + '%'
+        } else {
+          return this.$refs.ball.style.left
+        }
       }
     },
     methods: {
@@ -97,12 +104,15 @@
           let site = ((pageX - left - this.$refs.ball.offsetWidth / 2) / width * 100).toFixed(2)
           site = site > 100 ? 100 : site
           site = site < 0 ? 0 : site
-          this.$refs.ball.style.left = 'calc(' + site + '%)'
-          this.$refs.progress.style.width = 'calc(' + site + '%)'
+          this.$refs.ball.style.left = site + '%'
+          this.$refs.progress.style.width = site + '%'
         }
       },
       musicUp () {
-        this.moveStatus = false
+        if (this.moveStatus) {
+          this.moveStatus = false
+          this.$store.getters.getAudioElement.currentTime = this.$store.getters.getMusicDurationTime * parseFloat(this.$refs.ball.style.left) / 100
+        }
       }
     },
     filters: {
@@ -264,8 +274,8 @@
             position:absolute;
             bottom:-4px;
             left:0;
-            width:12px;
-            height:12px;
+            width:14px;
+            height:14px;
             -webkit-border-radius: 50%;
             -moz-border-radius: 50%;
             border-radius: 50%;
