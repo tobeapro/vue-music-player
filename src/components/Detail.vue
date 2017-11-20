@@ -1,13 +1,9 @@
 <template lang="pug">
   div(class="detail")
     swiper(:options="swiperOption",:not-next-tick="notNextTick",ref="mySwiper")
-      swiper-slide() I'm Slide 1
-      swiper-slide() I'm Slide 2
-      swiper-slide() I'm Slide 3
-      swiper-slide() I'm Slide 4
-      swiper-slide() I'm Slide 5
-      swiper-slide() I'm Slide 6
-      swiper-slide() I'm Slide 7
+      swiper-slide(v-for="(value,index) in musicList",:key="index")
+        a(:href="value.linkUrl",target="_blank")
+          img(:src="value.picUrl")
       div(class="swiper-pagination",slot="pagination")
       div(class="swiper-button-prev",slot="button-prev")
       div(class="swiper-button-next",slot="button-next")
@@ -19,6 +15,7 @@ export default{
   name: 'detail',
   data: function () {
     return {
+      musicList: [],
       notNextTick: true,
       swiperOption: {
         autoplay: 3000,
@@ -43,10 +40,10 @@ export default{
       return this.$refs.mySwiper.swiper
     }
   },
-  created: function () {
-    this.$axios.get('/user/detail')
+  created () {
+    this.$axios.get('/api/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg?g_tk=5381&uin=0&format=jsonp&inCharset=utf-8&outCharset=utf-8&notice=0&platform=h5&needNewCode=1&_=1492177982521')
       .then((res) => {
-        this.dataList = res.data.data
+        this.musicList = res.data.data.slider
       })
       .catch((res) => {
         console.log(res)
