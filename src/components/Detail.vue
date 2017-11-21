@@ -1,9 +1,14 @@
 <template lang="pug">
   div(class="detail")
     swiper(:options="swiperOption",:not-next-tick="notNextTick",ref="mySwiper")
-      swiper-slide(v-for="(value,index) in musicList",:key="index")
+      swiper-slide(v-for="(value,index) in musicList",:key="index",v-if="musicList.length > 0")
         a(:href="value.linkUrl",target="_blank")
           img(:src="value.picUrl")
+      swiper-slide(v-if="musicList.length === 0") slide1
+      swiper-slide(v-if="musicList.length === 0") slide2
+      swiper-slide(v-if="musicList.length === 0") slide3
+      swiper-slide(v-if="musicList.length === 0") slide4
+      swiper-slide(v-if="musicList.length === 0") slide5
       div(class="swiper-pagination",slot="pagination")
       div(class="swiper-button-prev",slot="button-prev")
       div(class="swiper-button-next",slot="button-next")

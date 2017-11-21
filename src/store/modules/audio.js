@@ -46,6 +46,9 @@ const audioInfo = {
     setMusic (state, obj) {
       state.music = obj
     },
+    setMusicList (state, obj) {
+      state.musicList = obj
+    },
     changePlayStatus (state) {
       if (state.playStatus) {
         state.playStatus = false
@@ -191,6 +194,9 @@ const audioInfo = {
     },
     set_music ({commit}, obj) {
       commit('setMusic', obj)
+    },
+    set_musicList ({commit}, obj) {
+      commit('setMusicList', obj)
     },
     show_musicList ({commit}) {
       commit('showMusicList')

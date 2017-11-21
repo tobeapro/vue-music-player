@@ -52,12 +52,23 @@
       }
     },
     created: function () {
+      this.$axios.get('/db/musicList/getList')
+        .then((res) => {
+          let list = res.data
+          if (list.length > 0) {
+            console.log(list)
+            this.$store.dispatch('set_musicList', list)
+            this.$store.dispatch('set_music', list[0])
+            this.$refs.audio.setAttribute('src', list[0].url)
+            this.$store.dispatch('set_audioElement', this.$refs.audio)
+          }
+        })
+        .catch((res) => {
+          console.log('connect error')
+        })
       this.$axios.get('/user')
         .then((res) => {
           this.userInfo = res.data.data
-          this.$refs.audio.setAttribute('src', res.data.data.music.url)
-          this.$store.dispatch('set_music', res.data.data.music)
-          this.$store.dispatch('set_audioElement', this.$refs.audio)
         })
         .catch((res) => {
           console.log(res)

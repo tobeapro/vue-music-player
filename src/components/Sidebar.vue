@@ -67,7 +67,7 @@
           div(class="user-body-item")
             i(class="fa fa-share-square-o")
             span 分享网易云音乐
-          div(class="user-body-item")
+          div(class="user-body-item",@click="get1()")
             i(class="fa fa-info")
             span 关于
           i(class="split-border")
@@ -94,7 +94,7 @@
         this.$store.dispatch('hideSideBar')
       },
       save () {
-        this.$axios.post('/db/customer/save', qs.stringify({'name': 'admin', 'pwd': '123asd', 'uId': 123123}))
+        this.$axios.post('/db/user/save', qs.stringify({'name': 'admin', 'pwd': '123asd', 'uId': 123}))
           .then((res) => {
           console.log(res)
           })
@@ -103,7 +103,16 @@
           })
       },
       get () {
-        this.$axios.get('/db/customer/find')
+        this.$axios.get('/db/user/find')
+          .then((res) => {
+            console.log(res)
+          })
+          .catch((res) => {
+            console.log(res)
+          })
+      },
+      get1 () {
+        this.$axios.post('/db/user/query', qs.stringify({'_id': '5a13e51146e2eb2588b819a9'}))
           .then((res) => {
             console.log(res)
           })

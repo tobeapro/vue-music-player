@@ -16,6 +16,7 @@
 <script>
   import Vue from 'vue'
   import VueSwiper from 'vue-awesome-swiper'
+  import qs from 'qs'
   Vue.use(VueSwiper)
   export default{
     name: 'home',
@@ -83,6 +84,13 @@
       playMusic (val) {
         this.$store.state.audio.audioElement.setAttribute('src', val.url)
         this.$store.dispatch('play_newMusic', val)
+        this.$axios.post('/db/musicList/save', qs.stringify(val))
+          .then(res => {
+            console.log(res)
+          })
+          .catch(res => {
+            console.log('erro:' + res)
+          })
 //        window.localStorage.setItem('musicList', JSON.stringify(this.$store.state.audio.musicList))
       },
       getList () {
