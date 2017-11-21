@@ -56,7 +56,13 @@
         .then((res) => {
           let list = res.data
           if (list.length > 0) {
-            console.log(list)
+            this.$store.dispatch('set_musicList', list)
+            this.$store.dispatch('set_music', list[0])
+            this.$refs.audio.setAttribute('src', list[0].url)
+            this.$store.dispatch('set_audioElement', this.$refs.audio)
+          } else {
+            console.log('database is none')
+            list = this.$store.getters.getMusicList
             this.$store.dispatch('set_musicList', list)
             this.$store.dispatch('set_music', list[0])
             this.$refs.audio.setAttribute('src', list[0].url)
@@ -65,6 +71,11 @@
         })
         .catch((res) => {
           console.log('connect error')
+          list = this.$store.getters.getMusicList
+          this.$store.dispatch('set_musicList', list)
+          this.$store.dispatch('set_music', list[0])
+          this.$refs.audio.setAttribute('src', list[0].url)
+          this.$store.dispatch('set_audioElement', this.$refs.audio)
         })
       this.$axios.get('/user')
         .then((res) => {

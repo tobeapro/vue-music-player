@@ -12,9 +12,10 @@
             i(class="fa",:class="[{'fa-volume-up':index === musicIndex},{'play':playStatus}]")
             span(class="list-name") {{item.name}}
             span(class="list-singer") ---{{item.singer}}
-            i(class="fa fa-trash remove",@click.stop="removeMusic(index,musicIndex)",v-if="musicList.length > 1")
+            i(class="fa fa-trash remove",@click.stop="removeMusic(index,musicIndex,item.id)",v-if="musicList.length > 1")
 </template>
 <script>
+  import qs from 'qs'
   export default {
     name: 'musicList',
     methods: {
@@ -27,12 +28,19 @@
       changePlayWay () {
         this.$store.dispatch('change_playWay')
       },
-      removeMusic (index, playIndex) {
+      removeMusic (index, playIndex,id) {
         this.$store.dispatch({
           type: 'remove_music',
           index: index,
           playIndex: playIndex
         })
+        this.$axios.post('/db/musicList/del', qs.stringify({'id': id}))
+          .then((res) => {
+            console.log(res)
+          })
+          .catch((res) => {
+            console.log(res)
+          })
       }
     },
     computed: {

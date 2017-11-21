@@ -34,6 +34,14 @@ module.exports = function (apiRoutes) {
       })
       .catch(() => res.status(500).end())
   })
+  apiRoutes.post('/musicList/del', (req, res) => {
+    Models.Music.find(req.body)
+      .remove()
+      .then(() => {
+        res.status(200).end()
+      })
+      .catch(() => res.status(500).end())
+  })
   apiRoutes.get('/musicList/getList', (req, res) => {
     Models.Music.find({}, (err, doc) => {
       if (err) {
