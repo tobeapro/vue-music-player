@@ -55,7 +55,8 @@
                     lyric: ''
                   })
                 })
-                this.$emit('datadetail', this.searchList)
+                this.$store.dispatch('search_music', this.searchList)
+                this.$router.push({path: '/'})
               }
             })
           .catch((res) => {

@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <audio ref="audio" @canplay="musicCanPlay" @timeupdate="musicUpdate" @ended="musicNext"></audio>
-    <v-header :user="userInfo" @datadetail="searchList"></v-header>
+    <v-header :user="userInfo"></v-header>
     <!--头部-->
     <side-bar :user="userInfo"></side-bar>
     <!--左侧栏-->
@@ -34,7 +34,6 @@
   import bottombar from '@/components/bottombar'
   import musicList from '@/components/musicList'
   import musicDetail from '@/components/musicDetail'
-  import qs from 'qs'
   export default {
     name: 'app',
     data () {
@@ -43,13 +42,7 @@
           userName: '',
           userIcon: ''
         },
-        musicList: [],
         isSideShow: false
-      }
-    },
-    watch: {
-      musicList: function (val) {
-        this.$store.dispatch('search_music', val)
       }
     },
     created () {
@@ -112,10 +105,6 @@
       'music-detail': musicDetail
     },
     methods: {
-      searchList: function (val) {
-        this.musicList = val
-        this.$router.push({path: '/'})
-      },
       musicCanPlay () {
         this.$store.dispatch('set_musicCurrentTime', this.$refs.audio)
         this.$store.dispatch('set_musicDurationTime', this.$refs.audio)
