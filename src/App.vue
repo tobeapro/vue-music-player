@@ -84,7 +84,7 @@
           }
         })
         .catch((res) => {
-          console.log('connect error')
+          console.log('connect database error')
           let list = this.$store.getters.getMusicList
           list = this.$store.getters.getMusicList
           this.$store.dispatch('set_musicList', list)
@@ -92,9 +92,9 @@
           this.$refs.audio.setAttribute('src', list[0].url)
           this.$store.dispatch('set_audioElement', this.$refs.audio)
         })
-      this.$axios.get('/user')
+      this.$axios.get('../static/data.json')
         .then((res) => {
-          this.userInfo = res.data.data
+          this.userInfo = res.data.userInfo
         })
         .catch((res) => {
           console.log('can not connect user')
