@@ -34,9 +34,10 @@
   import bottombar from '@/components/bottombar'
   import musicList from '@/components/musicList'
   import musicDetail from '@/components/musicDetail'
+  import qs from 'qs'
   export default {
     name: 'app',
-    data: function () {
+    data () {
       return {
         userInfo: {
           userName: '',
@@ -51,7 +52,7 @@
         this.$store.dispatch('search_music', val)
       }
     },
-    created: function () {
+    created () {
       this.$axios.get('/db/musicList/getList')
         .then((res) => {
           let list = res.data
@@ -61,16 +62,30 @@
             this.$refs.audio.setAttribute('src', list[0].url)
             this.$store.dispatch('set_audioElement', this.$refs.audio)
           } else {
-            console.log('database is none')
+            console.log('database is empty')
             list = this.$store.getters.getMusicList
             this.$store.dispatch('set_musicList', list)
             this.$store.dispatch('set_music', list[0])
             this.$refs.audio.setAttribute('src', list[0].url)
             this.$store.dispatch('set_audioElement', this.$refs.audio)
+            this.$axios.post('/db/musicList/saveList', list)
+              .then((res) => {
+              console.log(res)
+                if (res.status === 200) {
+                  console.log('初始化数据成功')
+                }
+                if (res.status === 202) {
+                  console.log('初始化失败')
+                }
+              })
+              .catch((res) => {
+                console.log('connect database music error')
+              })
           }
         })
         .catch((res) => {
           console.log('connect error')
+          let list = this.$store.getters.getMusicList
           list = this.$store.getters.getMusicList
           this.$store.dispatch('set_musicList', list)
           this.$store.dispatch('set_music', list[0])
@@ -82,7 +97,7 @@
           this.userInfo = res.data.data
         })
         .catch((res) => {
-          console.log(res)
+          console.log('can not connect user')
         })
 //      if (window.localStorage.getItem('musicList') !== null) {
 //        console.log(JSON.parse(window.localStorage.getItem('musicList')))

@@ -86,10 +86,18 @@
         this.$store.dispatch('play_newMusic', val)
         this.$axios.post('/db/musicList/save', qs.stringify(val))
           .then(res => {
-            console.log(res)
+            if (res.status === 200) {
+              console.log('添加成功')
+            }
+            if (res.status === 202) {
+              console.log('已存在')
+            }
+            if (res.status === 500) {
+              console.log('添加失败')
+            }
           })
           .catch(res => {
-            console.log('erro:' + res)
+            console.log(res)
           })
 //        window.localStorage.setItem('musicList', JSON.stringify(this.$store.state.audio.musicList))
       },
