@@ -89,9 +89,10 @@ module.exports = {
   }
 }
 
+var apiRoutes=express.Router()
+
 //请求本地数据
 // var appData=require('../static/data.json');
-var apiRoutes=express.Router();
 // apiRoutes.get('/',function(req,res){
 //   res.json({
 //     errno: 0,
@@ -116,6 +117,5 @@ var apiRoutes=express.Router();
 var bodyParser = require('body-parser')  //使用body-parser，对json数据处理，可在后面配置router接口的时候，对req和res进行数据处理
 app.use(bodyParser.urlencoded({ extended: false })) // parse application/x-www-form-urlencoded
 app.use(bodyParser.json()) // parse application/json
-
-const api = require('../servers/index.js')(apiRoutes)
+require('../servers/index.js')(apiRoutes)
 app.use('/db',apiRoutes)

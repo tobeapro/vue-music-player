@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <audio ref="audio" @canplay="musicCanPlay" @timeupdate="musicUpdate" @ended="musicNext"></audio>
-    <v-header :user="userInfo"></v-header>
+    <v-header :user="userInfo" @datadetail="dataDetail"></v-header>
     <!--头部-->
     <side-bar :user="userInfo"></side-bar>
     <!--左侧栏-->
@@ -50,6 +50,7 @@
         .then((res) => {
           let list = res.data
           if (list.length > 0) {
+            console.log('connect database')
             this.$store.dispatch('set_musicList', list)
             this.$store.dispatch('set_music', list[0])
             this.$refs.audio.setAttribute('src', list[0].url)
@@ -63,7 +64,6 @@
             this.$store.dispatch('set_audioElement', this.$refs.audio)
             this.$axios.post('/db/musicList/saveList', list)
               .then((res) => {
-              console.log(res)
                 if (res.status === 200) {
                   console.log('初始化数据成功')
                 }
@@ -114,6 +114,9 @@
       },
       musicNext () {
         this.$store.dispatch('play_nextMusic')
+      },
+      dataDetail (val) {
+        this.$store.dispatch('search_music', val)
       }
     }
   }

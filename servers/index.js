@@ -55,6 +55,9 @@ module.exports = function (apiRoutes) {
       .catch(() => res.status(500).end())
   })
   apiRoutes.get('/musicList/getList', (req, res) => {
+    setTimeout(function () {
+      res.status(500).end()
+    }, 2000)
     Models.Music.find({}, (err, doc) => {
       if (err) {
         console.log(err)
