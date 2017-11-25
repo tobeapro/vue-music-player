@@ -1,6 +1,9 @@
 const Models = require('./schema')
 module.exports = function (apiRoutes) {
   apiRoutes.get('/user/find', (req, res) => {
+    setTimeout(function () {
+      res.status(500).end()
+    }, 2000)
     Models.User.find({}, (err, doc) => {
       if (err) {
          console.log(err)
@@ -10,6 +13,9 @@ module.exports = function (apiRoutes) {
     })
   })
   apiRoutes.post('/user/query', (req, res) => {
+    setTimeout(function () {
+      res.status(500).end()
+    }, 2000)
     Models.User.find(req.body, (err, doc) => {
       if (err) {
         console.log(err)
@@ -19,6 +25,9 @@ module.exports = function (apiRoutes) {
     })
   })
   apiRoutes.post('/user/save', (req, res) => {
+    setTimeout(function () {
+      res.status(500).end()
+    }, 2000)
     Models.User(req.body)
       .save()
       .then(() => {
@@ -27,6 +36,9 @@ module.exports = function (apiRoutes) {
       .catch(() => res.status(500).end())
   })
   apiRoutes.post('/musicList/save', (req, res) => {
+    setTimeout(function () {
+      res.status(500).end()
+    }, 2000)
     Models.Music.find(req.body, (err, res2) => {
       if (err) {
         res.status(500).end()
@@ -47,6 +59,9 @@ module.exports = function (apiRoutes) {
     })
   })
   apiRoutes.post('/musicList/del', (req, res) => {
+    setTimeout(function () {
+      res.status(500).end()
+    }, 2000)
     Models.Music.find(req.body)
       .remove()
       .then(() => {
@@ -67,6 +82,9 @@ module.exports = function (apiRoutes) {
     })
   })
   apiRoutes.post('/musicList/saveList', (req, res) => {
+    setTimeout(function () {
+      res.status(500).end()
+    }, 2000)
     if (Object.prototype.toString.call(req.body) === '[object Array]') {
       req.body.forEach(item => {
         Models.Music(item)
