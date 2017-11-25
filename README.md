@@ -16,13 +16,17 @@ npm run build --report
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+
 #### vue-music-player
+
+> 使用qq音乐的接口
+
 - [x] 歌曲搜索
 - [x] 歌曲添加
 - [x] 歌曲删除
 - [x] 暂停/播放
 - [x] 上一首/下一首
 - [x] 随机/顺序播放
-- [x] 歌曲保存本地数据库（如果配置）
+- [x] 歌曲保存本地数据库（数据库启动状态）
 - [ ] 歌词显示
 
