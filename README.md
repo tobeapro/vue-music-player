@@ -16,3 +16,10 @@ npm run build --report
 ```
 
 For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## vue-music-player
+> #### 歌曲搜索
+> #### 歌曲添加
+> #### 歌曲删除
+> #### 暂停/播放
+> #### 切换
+> #### 随机/顺序播放
