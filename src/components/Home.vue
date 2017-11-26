@@ -27,9 +27,12 @@
        pageSize: 10,
        homeWidth: document.body.clientWidth,
        homeHeight: document.body.clientHeight - 152,
-       ballNum: 50,
-       ballTime: 500,
-       color: ['rgb(70,222,222)', 'rgb(30,200,100)', 'rgb(238,20,130)', 'rgb(43,35,94)', 'rgb(255,200,100)', 'rgb(64,195,129)', 'rgb(5,11,250)', 'rgb(100,250,100)', 'rgb(0,255,255)', 'rgb(255,195,0)']
+       ballNum: 16,
+       ballTime: 20,
+       ballRadius: 8,
+       ballSpeed: 10,
+       balls: [],
+       colors: ['rgb(70,222,222)', 'rgb(30,200,100)', 'rgb(238,20,130)', 'rgb(43,35,94)', 'rgb(255,200,100)', 'rgb(64,195,129)', 'rgb(5,11,250)', 'rgb(100,250,100)', 'rgb(0,255,255)', 'rgb(255,195,0)']
      }
     },
     mounted () {
@@ -42,7 +45,7 @@
             this.homeHeight = document.body.clientHeight - 152
           })()
         }
-        this.move()
+        this.actionBall()
       }
     },
     watch: {
@@ -65,21 +68,51 @@
       }
     },
     methods: {
-      move () {
+      actionBall () {
+        this.drawBall (this.myCanvas)
         setInterval(() => {
-          this.draw(this.myCanvas)
+          this.animateBall(this.myCanvas)
         }, this.ballTime)
       },
-      draw (el) {
-         let ele = el.getContext('2d')
-          ele.clearRect(0, 0, this.myCanvas.width, this.myCanvas.height)
-          for (let i = 0; i < this.ballNum; i++) {
-            ele.beginPath()
-            ele.fillStyle = this.color[Math.floor(Math.random() * this.color.length)]
-            ele.arc(Math.random() * this.myCanvas.width, Math.random() * this.myCanvas.height, 5, 0, 2 * Math.PI)
-            ele.fill()
-            ele.closePath()
-          }
+      createBall (w,h,colors,radius,speed) {
+        let obj = {}
+        obj.x = Math.random() * w
+        obj.y = Math.random() * h
+        obj.color = colors[Math.floor(Math.random() * colors.length)]
+        obj.radius = Math.floor(Math.random() * radius + radius)
+        obj.Vx = Math.floor(2*Math.random() * speed - speed) === 0 ? speed : Math.floor(2*Math.random() * speed - speed)
+        obj.Vy = Math.floor(2*Math.random() * speed - speed) === 0 ? speed : Math.floor(2*Math.random() * speed - speed)
+        return obj
+      },
+      drawBall (el) {
+        this.balls = []
+        for (let i = 0; i < this.ballNum; i++) {
+          this.balls.push(new this.createBall(this.homeWidth,this.homeHeight,this.colors,this.ballRadius,this.ballSpeed))
+        }
+        let ele = el.getContext('2d')
+        ele.clearRect(0, 0, this.myCanvas.width, this.myCanvas.height)
+        for (let i = 0; i < this.balls.length; i++) {
+          ele.beginPath()
+          ele.fillStyle = this.balls[i].color
+          ele.arc(this.balls[i].x, this.balls[i].y, this.balls[i].radius, 0, 2 * Math.PI)
+          ele.fill()
+          ele.closePath()
+        }
+      },
+      animateBall (el) {
+        let ele = el.getContext('2d')
+        ele.clearRect(0, 0, this.myCanvas.width, this.myCanvas.height)
+        for (let i = 0; i < this.balls.length; i++) {
+          this.balls[i].x += this.balls[i].Vx
+          this.balls[i].y += this.balls[i].Vy
+          this.balls[i].x < 0 || this.balls[i].x >this.myCanvas.width ? this.balls[i].Vx = -this.balls[i].Vx : this.balls[i].Vx = this.balls[i].Vx
+          this.balls[i].y < 0 || this.balls[i].y >this.myCanvas.height ? this.balls[i].Vy = -this.balls[i].Vy : this.balls[i].Vy = this.balls[i].Vy
+          ele.beginPath()
+          ele.fillStyle = this.balls[i].color
+          ele.arc(this.balls[i].x + this.balls[i].Vx, this.balls[i].y + this.balls[i].Vy, this.balls[i].radius, 0, 2 * Math.PI)
+          ele.fill()
+          ele.closePath()
+        }
       },
       playMusic (val) {
         this.$store.state.audio.audioElement.setAttribute('src', val.url)
