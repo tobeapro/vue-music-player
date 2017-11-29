@@ -4,15 +4,15 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import axios from 'axios'
-import iview from 'iview'
-import 'iview/dist/styles/iview.css'
 import 'font-awesome/css/font-awesome.min.css'
 import './assets/css/swiper.css'
+import './assets/css/custom.css'
+import custom from './assets/js/custom.js'
 import Vuex from 'vuex'
 import store from './store'
 Vue.use(Vuex)
-Vue.use(iview)
 Vue.prototype.$axios = axios
+Vue.prototype.$custom = custom
 Vue.config.productionTip = false
 /* eslint-disable no-new */
 export default new Vue({
@@ -20,7 +20,7 @@ export default new Vue({
   router,
   axios,
   store,
-  iview,
+  custom,
   template: '<App/>',
   components: { App }
 })

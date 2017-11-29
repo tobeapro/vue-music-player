@@ -5,9 +5,8 @@
         <span class="title_text">MUSIC</span>
       </i>
       <div class="search_text">
-        <Spin size="large" fix v-if="searchListState"></Spin>
-        <input class="ivu-input" placeholder="请输入..." v-model="search_content" @keyup.enter="search(search_content)">
-        <i class="ivu-icon ivu-icon-ios-search-strong" @click="search(search_content)"></i>
+        <input class="search-input" placeholder="请输入..." v-model="search_content" @keyup.enter="search(search_content)">
+        <i class="fa fa-search" @click="search(search_content)" aria-hidden="true"></i>
       </div>
       <div class="user_part">
         <i class="user_icon">
@@ -24,8 +23,7 @@
     data () {
       return {
         search_content: '',
-        hotListState: false,
-        searchListState: false
+        hotListState: false
       }
     },
     props: {
@@ -36,14 +34,15 @@
    methods: {
       search (val) {
         if (val === '') {
-          this.$Message.warning('请输入搜索信息')
+          this.$custom.tip.warning('请输出内容')
+          return
         } else {
-          this.searchListState = true
+          this.$custom.waiting.show()
           this.$axios.get('/api/soso/fcgi-bin/search_for_qq_cp?format=json&n=30&w=' + val + '')
           .then((res) => {
+              this.$custom.waiting.hide()
               if (res.data.data.song.list !== []) {
                 this.hotListState = false
-                this.searchListState = false
                 this.searchList = []
                 res.data.data.song.list.forEach(val => {
                   this.searchList.push({
@@ -60,7 +59,7 @@
               }
             })
           .catch((res) => {
-            this.searchListState = false
+            this.$custom.waiting.hide()
             this.$Message.warning('搜索出错')
             console.log(res)
             this.$emit('datadetail', [
@@ -115,13 +114,15 @@
         display:inline-block;
         width:30%;
         max-width:240px;
-        input{
+        .search-input{
           width:80%;
+          padding:0 6px;
           height:26px;
+          border-radius: 2px;
           vertical-align:middle;
           font-size:12px;
         }
-        i.ivu-icon-ios-search-strong{
+        i.fa{
           display:inline-block;
           vertical-align: middle;
           margin-left:6px;
@@ -162,8 +163,8 @@
         }
       }
     }
-    @keyframes sign{
-      0 {transform: translate(0)}
+    @keyframes sign {
+      0% {transform: translate(0)}
       20% {transform: translateY(-2px)}
       80% {transform: translateY(2px)}
       100% {transform: translate(0)}
