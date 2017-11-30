@@ -132,6 +132,7 @@ table,caption,tbody,tfoot,thead,tr,th,td,input,button,i,span{
   margin:0;
   padding:0;
   border:0;
+  box-sizing:border-box;
 }
 html,body{
   font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", "Microsoft Yahei", sans-serif;
@@ -143,7 +144,6 @@ html,body{
   user-select: none;
   height:100%;
   font-size:12px;
-  box-sizing:border-box;
 }
 input,button,textarea,td,th,select{
   font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", "Microsoft Yahei", sans-serif;
