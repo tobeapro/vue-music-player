@@ -14,8 +14,10 @@
       div(class="swiper-button-next",slot="button-next")
       div(class="swiper-scrollbar",slot="scrollbar")
 </template>
-
 <script>
+  import Vue from 'vue'
+  import swiper from 'vue-awesome-swiper'
+  Vue.use(swiper)
 export default{
   name: 'detail',
   data: function () {

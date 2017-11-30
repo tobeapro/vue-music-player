@@ -11,14 +11,14 @@
   position:absolute;
   content:"";
   left:50%;
-  top:50%;
+  top:30%;
   -webkit-transform: translate(-50%,-50%);
   -moz-transform: translate(-50%,-50%);
   -ms-transform: translate(-50%,-50%);
   -o-transform: translate(-50%,-50%);
   transform: translate(-50%,-50%);
-  width:60px;
-  height:60px;
+  width:30px;
+  height:30px;
   border-radius:10px;
   background:#2d8cf0;
   -webkit-animation:waiting 1.6s infinite ease-out;
@@ -45,33 +45,52 @@
 }
 @-moz-keyframes waiting
 {
-  0% {margin-top:-40px}
-  50% {margin-top:0}
-  100% {margin-top:-40px}
+  0% {margin-top:0}
+  50% {margin-top:40px}
+  100% {margin-top:0}
 }
-.custom-tip{
+.custom-messages{
   position:absolute;
   z-index:1001;
-  left:50%;
-  top:30%;
-  -webkit-transform: translate(-50%,-50%);
-  -moz-transform: translate(-50%,-50%);
-  -ms-transform: translate(-50%,-50%);
-  -o-transform: translate(-50%,-50%);
-  transform: translate(-50%,-50%);
+  top:10%;
+  width:100%;
+  text-align:center;
+}
+.custom-message-item{
+  display:inline-block;
+  margin-bottom:10px;
   padding:6px 12px;
+  font-size:14px;
+  line-height:26px;
   border:1px solid #ddd;
   border-radius:4px;
-  color:#007aff;
   background:#fff;
-  -webkit-animation:tip .6s 2 linear;
-  -o-animation:tip .6s 2 linear;
-  animation:tip .6s 2 linear;
+  -webkit-box-shadow:0 0 6px #ccc;
+  -moz-box-shadow:0 0 6px #ccc;
+  box-shadow:0 0 6px #ccc;
+  -webkit-animation:msg .2s 2 linear;
+  -o-animation:msg .2s 2 linear;
+  animation:msg .2s 2 linear;
 }
-.custom-tip .fa{
+.custom-message-item .fa{
   margin-right:6px;
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
 }
-@keyframes tip
+.custom-message-normal{
+  color:#007aff;
+}
+.custom-message-warning{
+  color:#ff9900;
+}
+.custom-message-error{
+  color:#dc0000;
+}
+.custom-message-success{
+  color:#32ce25;
+}
+@keyframes msg
 {
   0% {margin-left:0}
   25% {margin-left:-6px}
@@ -79,7 +98,7 @@
   75% {margin-left:6px}
   100% {margin-left:0}
 }
-@-webkit-keyframes tip
+@-webkit-keyframes msg
 {
   0% {margin-left:0}
   25% {margin-left:-6px}
@@ -87,7 +106,7 @@
   75% {margin-left:6px}
   100% {margin-left:0}
 }
-@-o-keyframes tip
+@-o-keyframes msg
 {
   0% {margin-left:0}
   25% {margin-left:-6px}
@@ -95,7 +114,7 @@
   75% {margin-left:6px}
   100% {margin-left:0}
 }
-@-moz-keyframes tip
+@-moz-keyframes msg
 {
   0% {margin-left:0}
   25% {margin-left:-6px}

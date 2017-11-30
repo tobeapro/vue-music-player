@@ -34,14 +34,17 @@
    methods: {
       search (val) {
         if (val === '') {
-          this.$custom.tip.warning('请输出内容')
+          this.$custom.messages.warning('请输入搜索内容！')
           return
         } else {
           this.$custom.waiting.show()
           this.$axios.get('/api/soso/fcgi-bin/search_for_qq_cp?format=json&n=30&w=' + val + '')
           .then((res) => {
               this.$custom.waiting.hide()
-              if (res.data.data.song.list !== []) {
+              if (res.data.data.song.list === []) {
+                this.$custom.tip.warning('没有搜索结果！')
+                return
+              } else {
                 this.hotListState = false
                 this.searchList = []
                 res.data.data.song.list.forEach(val => {
@@ -60,26 +63,7 @@
             })
           .catch((res) => {
             this.$custom.waiting.hide()
-            this.$Message.warning('搜索出错')
-            console.log(res)
-            this.$emit('datadetail', [
-            {
-              'id': 449205,
-              'name': '稻香',
-              'singer': '周杰伦',
-              'img': 'https://y.gtimg.cn/music/photo_new/T002R150x150M000002Neh8l0uciQZ.jpg?max_age=2592000',
-              'url': 'http://ws.stream.qqmusic.qq.com/449205.m4a?fromtag=46',
-              'lyric': ''
-            },
-            {
-              'id': 97773,
-              'name': '晴天',
-              'singer': '周杰伦',
-              'img': 'https://y.gtimg.cn/music/photo_new/T002R150x150M000000MkMni19ClKG.jpg?max_age=2592000',
-              'url': 'http://ws.stream.qqmusic.qq.com/97773.m4a?fromtag=46',
-              'lyric': ''
-            }
-            ])
+            this.$custom.messages.error('搜索失败!')
           })
         }
       },
@@ -118,9 +102,10 @@
           width:80%;
           padding:0 6px;
           height:26px;
-          border-radius: 2px;
+          border-radius:6px;
           vertical-align:middle;
           font-size:12px;
+          letter-spacing:2px;
         }
         i.fa{
           display:inline-block;

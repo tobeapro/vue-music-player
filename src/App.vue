@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <audio ref="audio" @canplay="musicCanPlay" @timeupdate="musicUpdate" @ended="musicNext"></audio>
-    <v-header :user="userInfo" @datadetail="dataDetail"></v-header>
+    <v-header :user="userInfo"></v-header>
     <!--头部-->
     <side-bar :user="userInfo"></side-bar>
     <!--左侧栏-->
@@ -114,9 +114,6 @@
       },
       musicNext () {
         this.$store.dispatch('play_nextMusic')
-      },
-      dataDetail (val) {
-        this.$store.dispatch('search_music', val)
       }
     }
   }
@@ -136,16 +133,21 @@ table,caption,tbody,tfoot,thead,tr,th,td,input,button,i,span{
   padding:0;
   border:0;
 }
-html,body{font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", "Microsoft Yahei", sans-serif;
+html,body{
+  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", "Microsoft Yahei", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  height:100%;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  height:100%;
+  font-size:12px;
+  box-sizing:border-box;
 }
-input,button,textarea,td,th,select{outline:none;}
+input,button,textarea,td,th,select{
+  font-family: "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Hiragino Sans GB", "WenQuanYi Micro Hei", "Microsoft Yahei", sans-serif;
+  outline:none;}
 table {border-collapse:collapse;border-spacing:0;}
 ol,ul{list-style: none;}
 a{text-decoration:none;}
@@ -160,7 +162,6 @@ input[disabled], select[disabled]{
 }
 .app{
   height:100%;
-
 }
 .app .tab{
   display:flex;

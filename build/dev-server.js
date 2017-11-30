@@ -89,31 +89,8 @@ module.exports = {
   }
 }
 
-var apiRoutes=express.Router()
-
-//请求本地数据
-// var appData=require('../static/data.json');
-// apiRoutes.get('/',function(req,res){
-//   res.json({
-//     errno: 0,
-//     data:appData.userInfo
-//   })
-// })
-// apiRoutes.get('/detail',function(req,res){
-//   res.json({
-//     errno: 0,
-//     data:appData.dataList
-//   })
-// })
-// apiRoutes.get('/musicList2',function(req,res){
-//   res.json({
-//     errno: 0,
-//     data:appData.musicList2
-//   })
-// })
-// app.use('/user',apiRoutes)
-
 //Mongodb配置
+var apiRoutes=express.Router()
 var bodyParser = require('body-parser')  //使用body-parser，对json数据处理，可在后面配置router接口的时候，对req和res进行数据处理
 app.use(bodyParser.urlencoded({ extended: false })) // parse application/x-www-form-urlencoded
 app.use(bodyParser.json()) // parse application/json

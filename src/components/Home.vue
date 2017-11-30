@@ -4,35 +4,29 @@
       div(class="home-text") Welcome
       canvas(:width="homeWidth",:height="homeHeight",ref="myCanvas")
     ul(class="music-ul",v-if="musicList.length!==0")
-      li(v-for="(value,index) in showlist",class="music-li",@click="playMusic(value)")
+      li(v-for="(value,index) in musicList",class="music-li",@click="playMusic(value)")
         span(v-text="index+1",class="music-li-index")
         span(class="music-li-img")
           img(:src="value.img")
         span(v-text="value.name",class="music-li-name")
         span(v-text="value.singer",class="music-li-singer")
-    Page(:total="musicList.length",:current="pageNow",:page-size="pageSize",@on-change="changePage",v-if="musicList.length > pageSize")
 </template>
 
 <script>
-  import Vue from 'vue'
-  import VueSwiper from 'vue-awesome-swiper'
   import qs from 'qs'
-  Vue.use(VueSwiper)
   export default{
     name: 'home',
     data () {
      return {
        musicUrl: '',
-       pageNow: 1,
-       pageSize: 10,
        homeWidth: document.body.clientWidth,
        homeHeight: document.body.clientHeight - 152,
        ballNum: 16,
        ballTime: 20,
-       ballRadius: 8,
-       ballSpeed: 10,
+       ballRadius: 6,
+       ballSpeed: 6,
        balls: [],
-       colors: ['rgb(70,222,222)', 'rgb(30,200,100)', 'rgb(238,20,130)', 'rgb(43,35,94)', 'rgb(255,200,100)', 'rgb(64,195,129)', 'rgb(5,11,250)', 'rgb(100,250,100)', 'rgb(0,255,255)', 'rgb(255,195,0)']
+       colors: ['#46dede', '#1ec864', '#ee1482', '#2b235e', '#ffc864', '#40c381', '#050bfa', '#64fa64', '#00ffff', '#ffc300']
      }
     },
     mounted () {
@@ -62,32 +56,29 @@
       },
       musicList () {
         return this.$store.state.audio.searchMusicList
-      },
-      showlist () {
-        return this.musicList.slice((this.pageNow - 1) * this.pageSize, this.pageNow * this.pageSize)
       }
     },
     methods: {
       actionBall () {
-        this.drawBall (this.myCanvas)
+        this.drawBall(this.myCanvas)
         setInterval(() => {
           this.animateBall(this.myCanvas)
         }, this.ballTime)
       },
-      createBall (w,h,colors,radius,speed) {
+      createBall (w, h, colors, radius, speed) {
         let obj = {}
         obj.x = Math.random() * w
         obj.y = Math.random() * h
         obj.color = colors[Math.floor(Math.random() * colors.length)]
         obj.radius = Math.floor(Math.random() * radius + radius)
-        obj.Vx = Math.floor(2*Math.random() * speed - speed) === 0 ? speed : Math.floor(2*Math.random() * speed - speed)
-        obj.Vy = Math.floor(2*Math.random() * speed - speed) === 0 ? speed : Math.floor(2*Math.random() * speed - speed)
+        obj.Vx = Math.floor(2 * Math.random() * speed - speed) === 0 ? speed : Math.floor(2 * Math.random() * speed - speed)
+        obj.Vy = Math.floor(2 * Math.random() * speed - speed) === 0 ? speed : Math.floor(2 * Math.random() * speed - speed)
         return obj
       },
       drawBall (el) {
         this.balls = []
         for (let i = 0; i < this.ballNum; i++) {
-          this.balls.push(new this.createBall(this.homeWidth,this.homeHeight,this.colors,this.ballRadius,this.ballSpeed))
+          this.balls.push(new this.createBall(this.homeWidth, this.homeHeight, this.colors, this.ballRadius, this.ballSpeed))
         }
         let ele = el.getContext('2d')
         ele.clearRect(0, 0, this.myCanvas.width, this.myCanvas.height)
@@ -105,8 +96,8 @@
         for (let i = 0; i < this.balls.length; i++) {
           this.balls[i].x += this.balls[i].Vx
           this.balls[i].y += this.balls[i].Vy
-          this.balls[i].x < 0 || this.balls[i].x >this.myCanvas.width ? this.balls[i].Vx = -this.balls[i].Vx : this.balls[i].Vx = this.balls[i].Vx
-          this.balls[i].y < 0 || this.balls[i].y >this.myCanvas.height ? this.balls[i].Vy = -this.balls[i].Vy : this.balls[i].Vy = this.balls[i].Vy
+          this.balls[i].x < 0 || this.balls[i].x > this.myCanvas.width ? this.balls[i].Vx = -this.balls[i].Vx : this.balls[i].Vx = this.balls[i].Vx
+          this.balls[i].y < 0 || this.balls[i].y > this.myCanvas.height ? this.balls[i].Vy = -this.balls[i].Vy : this.balls[i].Vy = this.balls[i].Vy
           ele.beginPath()
           ele.fillStyle = this.balls[i].color
           ele.arc(this.balls[i].x + this.balls[i].Vx, this.balls[i].y + this.balls[i].Vy, this.balls[i].radius, 0, 2 * Math.PI)
@@ -133,13 +124,6 @@
             console.log(res)
           })
 //        window.localStorage.setItem('musicList', JSON.stringify(this.$store.state.audio.musicList))
-      },
-      getList () {
-        return this.musicList.slice((this.pageNow - 1) * this.pageSize, this.pageNow * this.pageSize)
-      },
-      changePage (val) {
-        this.pageNow = val
-        this.getList()
       }
     }
   }
