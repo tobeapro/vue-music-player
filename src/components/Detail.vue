@@ -1,18 +1,24 @@
 <template lang="pug">
   div(class="detail")
     swiper(:options="swiperOption",:not-next-tick="notNextTick",ref="mySwiper")
-      swiper-slide(v-for="(value,index) in musicList",:key="index",v-if="musicList.length > 0")
+      swiper-slide(v-for="(value,index) in dailyMusic",:key="index",v-if="dailyMusic.length > 0")
         a(:href="value.linkUrl",target="_blank")
           img(:src="value.picUrl")
-      swiper-slide(v-if="musicList.length === 0") slide1
-      swiper-slide(v-if="musicList.length === 0") slide2
-      swiper-slide(v-if="musicList.length === 0") slide3
-      swiper-slide(v-if="musicList.length === 0") slide4
-      swiper-slide(v-if="musicList.length === 0") slide5
+      swiper-slide(v-if="dailyMusic.length === 0") slide1
+      swiper-slide(v-if="dailyMusic.length === 0") slide2
+      swiper-slide(v-if="dailyMusic.length === 0") slide3
+      swiper-slide(v-if="dailyMusic.length === 0") slide4
+      swiper-slide(v-if="dailyMusic.length === 0") slide5
       div(class="swiper-pagination",slot="pagination")
-      div(class="swiper-button-prev",slot="button-prev")
-      div(class="swiper-button-next",slot="button-next")
       div(class="swiper-scrollbar",slot="scrollbar")
+    div(class="self-musicList")
+     div(class="song-lists") 我的歌单
+     div(class="song-list-item",v-for="(item,index) in songList",@click="checkSongList(item)")
+      div(class="song-list-pic")
+        img(:src="item.bgImg")
+      div(class="song-list-content")
+        div(class="song-list-name",v-text="item.name")
+        div(class="song-list-num") 共{{item.list.length}}首
 </template>
 <script>
   import Vue from 'vue'
@@ -22,7 +28,8 @@ export default{
   name: 'detail',
   data: function () {
     return {
-      musicList: [],
+      dailyMusic: [],
+      songList: [],
       notNextTick: true,
       swiperOption: {
         autoplay: 3000,
@@ -50,11 +57,23 @@ export default{
   created () {
     this.$axios.get('/api/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg?g_tk=5381&uin=0&format=jsonp&inCharset=utf-8&outCharset=utf-8&notice=0&platform=h5&needNewCode=1&_=1492177982521')
       .then((res) => {
-        this.musicList = res.data.data.slider
+        this.dailyMusic = res.data.data.slider
       })
       .catch((res) => {
         console.log(res)
       })
+    this.$axios.get('../../static/data.json')
+      .then((res) => {
+        this.songList = res.data.musicList
+      })
+      .catch((res) => {
+        console.log(res)
+      })
+  },
+  methods: {
+    checkSongList (val) {
+      this.$store.dispatch('set_songList', val)
+    }
   },
   filters: {
     priceFilter: function (val) {
@@ -71,11 +90,12 @@ export default{
     left:0;
     right:0;
     bottom:50px;
+    overflow-y:auto;
     .swiper-container{
       margin-left: auto;
       margin-right: auto;
       position: relative;
-      height:100%;
+      height:260px;
       overflow: hidden;
       z-index: 1;
       .swiper-wrapper{
@@ -86,11 +106,49 @@ export default{
           height:100%;
           align-items: center;
           justify-content: center;
+          img{
+            height:200px;
+          }
         }
       }
       .swiper-pagination-bullet{
         width:12px;
         height:12px;
+      }
+    }
+    .song-lists{
+      padding-left:12px;
+      line-height:30px;
+      background:#ddd;
+    }
+    .song-list-item {
+      height:50px;
+      font-size:0;
+      vertical-align: middle;
+      border-bottom:1px solid #ddd;
+      cursor: pointer;
+      .song-list-pic {
+        display:inline-block;
+        padding-left:10px;
+        img {
+          width: 40px;
+          height: 40px;
+        }
+      }
+      .song-list-content {
+        display:inline-block;
+        padding-left:10px;
+        .song-list-name {
+          height: 30px;
+          line-height:30px;
+          font-size:14px;
+        }
+        .song-list-num {
+          height: 20px;
+          line-height:20px;
+          font-size:14px;
+          color:#aaa;
+        }
       }
     }
   }

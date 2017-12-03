@@ -34,7 +34,9 @@ const audioInfo = {
         'lyric': ''
       }
     ],
-    musicInfoStatus: false
+    musicInfoStatus: false,
+    songList: [],
+    songListStatus: false,
   },
   mutations: {
     searchMusic (state, ary) {
@@ -183,6 +185,16 @@ const audioInfo = {
     },
     setMusicDurationTime (state, obj) {
       state.musicDurationTime = obj.duration
+    },
+    setSongList (state, obj) {
+      state.songList = obj
+      state.songListStatus = true
+    },
+    showSongList (state) {
+      state.songListStatus = true
+    },
+    hideSongList (state) {
+      state.songListStatus = false
     }
   },
   actions: {
@@ -237,6 +249,15 @@ const audioInfo = {
     },
     set_musicDurationTime ({commit}, obj) {
       commit('setMusicDurationTime', obj)
+    },
+    set_songList ({commit}, obj) {
+      commit('setSongList', obj)
+    },
+    show_songList ({commit}) {
+      commit('showSongList')
+    },
+    hide_songList ({commit}) {
+      commit('hideSongList')
     }
   },
   getters: {
@@ -257,6 +278,12 @@ const audioInfo = {
     },
     getMusicDurationTime (state) {
       return state.musicDurationTime
+    },
+    getSongList (state) {
+      return state.songList
+    },
+    getSongListStatus (state) {
+      return state.songListStatus
     }
   }
 }

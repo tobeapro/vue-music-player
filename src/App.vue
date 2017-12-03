@@ -25,6 +25,8 @@
     <!--播放列表-->
     <music-detail></music-detail>
     <!--当前播放-->
+    <song-list></song-list>
+    <!--歌单详情-->
   </div>
 </template>
 
@@ -34,6 +36,7 @@
   import bottombar from '@/components/bottombar'
   import musicList from '@/components/musicList'
   import musicDetail from '@/components/musicDetail'
+  import songList from '@/components/songList'
   export default {
     name: 'app',
     data () {
@@ -102,7 +105,8 @@
       'side-bar': sidebar,
       'bottom-bar': bottombar,
       'music-list': musicList,
-      'music-detail': musicDetail
+      'music-detail': musicDetail,
+      'song-list': songList
     },
     methods: {
       musicCanPlay () {
