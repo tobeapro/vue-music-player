@@ -9,14 +9,19 @@
         div(class="song-list-header")
           div(class="song-list-info")
             div(class="song-list-pic")
-              img(:src="songList.bgImg")
+              img(:src="songList.bgImg",:title="songList.name")
+            div(class="song-list-detail")
+              div(class="song-list-name") {{songList.name}}
+              div(class="song-list-intro") 简介
+                i(class="fa fa-chevron-right")
         div(class="song-list-content")
-          div(class="song-list-item",v-for="(item,index) in songList.list")
+          div(class="song-list-item",v-for="(item,index) in songList.list",@click="playMusic(item)")
             span(class="song-list-item-index") {{index+1}}、
             span(class="song-list-item-name") {{item.name}}
 </template>
 
 <script>
+import qs from 'qs'
 export default{
   name: 'songList',
   data () {
@@ -34,6 +39,25 @@ export default{
   methods: {
     hideSongList () {
       this.$store.dispatch('hide_songList')
+    },
+    playMusic (val) {
+      this.$store.state.audio.audioElement.setAttribute('src', val.url)
+      this.$store.dispatch('play_newMusic', val)
+      this.$axios.post('/db/musicList/save', qs.stringify(val))
+        .then(res => {
+          if (res.status === 200) {
+            console.log('添加成功')
+          }
+          if (res.status === 202) {
+            console.log('已存在')
+          }
+          if (res.status === 500) {
+            console.log('添加失败')
+          }
+        })
+        .catch(res => {
+          console.log(res)
+        })
     }
   }
 }
@@ -60,14 +84,14 @@ export default{
       filter:blur(30px);
     }
     .song-list-title {
-      position: fixed;
+      position: absolute;
       z-index:1;
       left: 0;
       right: 0;
       top: 0;
       height: 40px;
       line-height: 40px;
-      font-size: 16px;
+      font-size: 14px;
       color:#fff;
       .fa {
         font-size: 16px;
@@ -77,23 +101,41 @@ export default{
     }
     .song-list-part {
       position: fixed;
-      top: 0;
+      top: 40px;
       left: 0;
       right: 0;
       bottom: 50px;
       overflow-y:auto;
       .song-list-header {
-        padding-top: 40px;
-        height: 200px;
         font-size: 12px;
         color: #fff;
-        overflow-y: auto;
-        background: rgba(0, 0, 0, .6);
+
         .song-list-info {
+          display:flex;
           .song-list-pic {
+            display:inline-block;
+            padding:10px 20px;
+            font-size:0;
             img {
               width: 80px;
               height: 80px;
+            }
+          }
+          .song-list-detail {
+            flex:1;
+            .song-list-name {
+              margin-top:20px;
+              height: 40px;
+              line-height:40px;
+            }
+            .song-list-intro{
+              cursor:pointer;
+            &:hover{
+              text-decoration:underline;
+            }
+              .fa{
+                margin-left:6px;
+              }
             }
           }
         }
@@ -106,6 +148,9 @@ export default{
           line-height: 36px;
           font-size: 12px;
           border-bottom:1px solid #ddd;
+          &:hover{
+            background:#eee;
+          }
         }
       }
     }
