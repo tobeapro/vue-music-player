@@ -1,9 +1,8 @@
 <template>
     <div id="header" class="header">
-      <i class="icon" @click="showSide">
-        <img width="40" src="../../static/icon.png">
-        <span class="title_text">MUSIC</span>
-      </i>
+      <div class="icon" @click="showSide" title="侧边栏">
+        <i class="fa fa-music" aria-hidden="true"></i>
+      </div>
       <div class="search_text">
         <input class="search-input" placeholder="请输入..." v-model="search_content" @keyup.enter="search(search_content)">
         <i class="fa fa-search" @click="search(search_content)" aria-hidden="true"></i>
@@ -76,17 +75,21 @@
 
 <style lang="scss">
     .header{
-      padding-left:20px;
+      display:flex;
+      justify-content:center;
       height:60px;
       line-height:60px;
-      font-size:0px;
       color:#fff;
       background:#dc0000;
       .icon{
         display:inline-block;
-        width:40%;
-        max-width:300px;
+        padding:0 20px;
         cursor: pointer;
+        .fa{
+          line-height:60px;
+          font-size:20px;
+          color:#fff;
+        }
         &:hover{
           animation:sign .2s ;
         }
@@ -95,14 +98,12 @@
         }
       }
       .search_text{
-        display:inline-block;
-        width:30%;
-        max-width:240px;
+        flex:1;
+        text-align:center;
         .search-input{
-          width:80%;
-          padding:0 6px;
+          padding:0 4px;
           height:26px;
-          border-radius:6px;
+          border-radius:4px;
           vertical-align:middle;
           font-size:12px;
           letter-spacing:2px;
@@ -119,20 +120,11 @@
           }
         }
       }
-      .title_text{
-        display:inline-block;
-        font-size:20px;
-        font-weight:bold;
-        color:#fff;
-        vertical-align:top;
-      }
       .user_part{
         display:inline-block;
-        text-align: right;
-        width:30%;
         float:right;
+        text-align: right;
         .user_name{
-          margin:0 16px;
           font-size:16px;
           vertical-align:top;
         }
