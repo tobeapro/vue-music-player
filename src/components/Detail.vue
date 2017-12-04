@@ -95,7 +95,7 @@ export default{
       margin-left: auto;
       margin-right: auto;
       position: relative;
-      height:260px;
+      height:220px;
       overflow: hidden;
       z-index: 1;
       .swiper-wrapper{
@@ -106,8 +106,14 @@ export default{
           height:100%;
           align-items: center;
           justify-content: center;
-          img{
-            height:200px;
+          a {
+            display:inline-block;
+            padding:0 10px;
+            width:100%;
+            img {
+              width: 100%;
+              height: 160px;
+            }
           }
         }
       }
