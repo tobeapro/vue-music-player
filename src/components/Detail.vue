@@ -1,159 +1,209 @@
 <template lang="pug">
   div(class="detail")
-    swiper(:options="swiperOption",:not-next-tick="notNextTick",ref="mySwiper")
-      swiper-slide(v-for="(value,index) in dailyMusic",:key="index",v-if="dailyMusic.length > 0")
-        a(:href="value.linkUrl",target="_blank")
-          img(:src="value.picUrl")
-      swiper-slide(v-if="dailyMusic.length === 0") slide1
-      swiper-slide(v-if="dailyMusic.length === 0") slide2
-      swiper-slide(v-if="dailyMusic.length === 0") slide3
-      swiper-slide(v-if="dailyMusic.length === 0") slide4
-      swiper-slide(v-if="dailyMusic.length === 0") slide5
-      div(class="swiper-pagination",slot="pagination")
-      div(class="swiper-scrollbar",slot="scrollbar")
-    div(class="self-musicList")
-     div(class="song-lists") 我的歌单
-     div(class="song-list-item",v-for="(item,index) in songList",@click="checkSongList(item)")
-      div(class="song-list-pic")
-        img(:src="item.bgImg")
-      div(class="song-list-content")
-        div(class="song-list-name",v-text="item.name")
-        div(class="song-list-num") 共{{item.list.length}}首
+    div(class="home-default",v-if="musicList.length===0",ref="home")
+      div(class="home-text") Welcome
+      canvas(:width="homeWidth",:height="homeHeight",ref="myCanvas")
+    ul(class="music-ul",v-if="musicList.length!==0")
+      li(v-for="(value,index) in musicList",class="music-li",@click="playMusic(value)")
+        span(v-text="index+1",class="music-li-index")
+        span(class="music-li-img")
+          img(:src="value.img")
+        span(v-text="value.name",class="music-li-name")
+        span(v-text="value.singer",class="music-li-singer")
 </template>
+
 <script>
-  import Vue from 'vue'
-  import swiper from 'vue-awesome-swiper'
-  Vue.use(swiper)
-export default{
-  name: 'detail',
-  data: function () {
-    return {
-      dailyMusic: [],
-      songList: [],
-      notNextTick: true,
-      swiperOption: {
-        autoplay: 3000,
-        direction: 'horizontal',
-        grabCursor: true,
-        setWrapperSize: true,
-        pagination: '.swiper-pagination',
-        paginationClickable: true,
-        prevButton: '.swiper-button-prev',
-        nextButton: '.swiper-button-next',
-        scrollbar: '.swiper-scrollbar',
-        mousewheelControl: true,
-        observeParents: true,
-        debugger: true,
-        onTransitionStart (swiper) {
+  import qs from 'qs'
+  export default{
+    name: 'home',
+    data () {
+      return {
+        musicUrl: '',
+        homeWidth: document.body.clientWidth,
+        homeHeight: document.body.clientHeight - 152,
+        ballNum: 16,
+        ballTime: 20,
+        ballRadius: 6,
+        ballSpeed: 6,
+        balls: [],
+        colors: ['#46dede', '#1ec864', '#ee1482', '#2b235e', '#ffc864', '#40c381', '#050bfa', '#64fa64', '#00ffff', '#ffc300']
+      }
+    },
+    mounted () {
+      if (this.musicList.length !== 0) {
+        return
+      } else {
+        window.onresize = () => {
+          return (() => {
+            this.homeWidth = document.body.clientWidth
+            this.homeHeight = document.body.clientHeight - 152
+          })()
         }
+        this.actionBall()
+      }
+    },
+    watch: {
+      homeWidth (val) {
+        this.homeWidth = val
+      },
+      homeHeight (val) {
+        this.homeHeight = val
+      }
+    },
+    computed: {
+      myCanvas () {
+        return this.$refs.myCanvas
+      },
+      musicList () {
+        return this.$store.state.audio.searchMusicList
+      }
+    },
+    methods: {
+      actionBall () {
+        this.drawBall(this.myCanvas)
+        setInterval(() => {
+          this.animateBall(this.myCanvas)
+        }, this.ballTime)
+      },
+      createBall (w, h, colors, radius, speed) {
+        let obj = {}
+        obj.x = Math.random() * w
+        obj.y = Math.random() * h
+        obj.color = colors[Math.floor(Math.random() * colors.length)]
+        obj.radius = Math.floor(Math.random() * radius + radius)
+        obj.Vx = Math.floor(2 * Math.random() * speed - speed) === 0 ? speed : Math.floor(2 * Math.random() * speed - speed)
+        obj.Vy = Math.floor(2 * Math.random() * speed - speed) === 0 ? speed : Math.floor(2 * Math.random() * speed - speed)
+        return obj
+      },
+      drawBall (el) {
+        this.balls = []
+        for (let i = 0; i < this.ballNum; i++) {
+          this.balls.push(new this.createBall(this.homeWidth, this.homeHeight, this.colors, this.ballRadius, this.ballSpeed))
+        }
+        let ele = el.getContext('2d')
+        ele.clearRect(0, 0, this.myCanvas.width, this.myCanvas.height)
+        for (let i = 0; i < this.balls.length; i++) {
+          ele.beginPath()
+          ele.fillStyle = this.balls[i].color
+          ele.arc(this.balls[i].x, this.balls[i].y, this.balls[i].radius, 0, 2 * Math.PI)
+          ele.fill()
+          ele.closePath()
+        }
+      },
+      animateBall (el) {
+        let ele = el.getContext('2d')
+        ele.clearRect(0, 0, this.myCanvas.width, this.myCanvas.height)
+        for (let i = 0; i < this.balls.length; i++) {
+          this.balls[i].x += this.balls[i].Vx
+          this.balls[i].y += this.balls[i].Vy
+          this.balls[i].x < 0 || this.balls[i].x > this.myCanvas.width ? this.balls[i].Vx = -this.balls[i].Vx : this.balls[i].Vx = this.balls[i].Vx
+          this.balls[i].y < 0 || this.balls[i].y > this.myCanvas.height ? this.balls[i].Vy = -this.balls[i].Vy : this.balls[i].Vy = this.balls[i].Vy
+          ele.beginPath()
+          ele.fillStyle = this.balls[i].color
+          ele.arc(this.balls[i].x + this.balls[i].Vx, this.balls[i].y + this.balls[i].Vy, this.balls[i].radius, 0, 2 * Math.PI)
+          ele.fill()
+          ele.closePath()
+        }
+      },
+      playMusic (val) {
+        this.$store.state.audio.audioElement.setAttribute('src', val.url)
+        this.$store.dispatch('play_newMusic', val)
+        this.$axios.post('/db/musicList/save', qs.stringify(val))
+          .then(res => {
+            if (res.status === 200) {
+              console.log('添加成功')
+            }
+            if (res.status === 202) {
+              console.log('已存在')
+            }
+            if (res.status === 500) {
+              console.log('添加失败')
+            }
+          })
+          .catch(res => {
+            console.log(res)
+          })
+//        window.localStorage.setItem('musicList', JSON.stringify(this.$store.state.audio.musicList))
       }
     }
-  },
-  computed: {
-    swiper () {
-      return this.$refs.mySwiper.swiper
-    }
-  },
-  created () {
-    this.$axios.get('/api/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg?g_tk=5381&uin=0&format=jsonp&inCharset=utf-8&outCharset=utf-8&notice=0&platform=h5&needNewCode=1&_=1492177982521')
-      .then((res) => {
-        this.dailyMusic = res.data.data.slider
-      })
-      .catch((res) => {
-        console.log(res)
-      })
-    this.$axios.get('../../static/data.json')
-      .then((res) => {
-        this.songList = res.data.musicList
-      })
-      .catch((res) => {
-        console.log(res)
-      })
-  },
-  methods: {
-    checkSongList (val) {
-      this.$store.dispatch('set_songList', val)
-    }
-  },
-  filters: {
-    priceFilter: function (val) {
-      return '¥' + ' ' + val
-    }
   }
-}
 </script>
 
 <style lang="scss">
-  .detail{
+  .detail {
     position:fixed;
     top:102px;
     left:0;
     right:0;
     bottom:50px;
     overflow-y:auto;
-    .swiper-container{
-      margin-left: auto;
-      margin-right: auto;
-      position: relative;
-      height:220px;
-      overflow: hidden;
-      z-index: 1;
-      .swiper-wrapper{
-        height:100%;
-        .swiper-slide{
-          display:flex;
-          float:left;
-          height:100%;
-          align-items: center;
-          justify-content: center;
-          a {
-            display:inline-block;
-            padding:0 10px;
-            width:100%;
-            img {
-              width: 100%;
-              height: 160px;
-            }
+    background:url("../../static/bg2.png") center -30px no-repeat;
+    .home-default{
+      position:relative;
+      height:100%;
+      font-size:30px;
+      font-weight:bold;
+      text-align:center;
+      background:#fff;
+      overflow:hidden;
+      .home-text{
+        position:absolute;
+        left:50%;
+        top:50%;
+        transform:translate(-50%,-50%);
+      }
+    }
+    .music-ul {
+      border-top:1px solid #ccc;
+      border-bottom:2px solid #dc0000;
+      .music-li {
+        display: flex;
+        height: 40px;
+        line-height: 40px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        &:not(:last-child) {
+          border-bottom: 1px solid #ccc;
+        }
+        &:hover {
+          color: #fff;
+          background: #2d8cf0;
+          transition: .6s;
+          img {
+            opacity: 1 !important;
           }
         }
-      }
-      .swiper-pagination-bullet{
-        width:12px;
-        height:12px;
-      }
-    }
-    .song-lists{
-      padding-left:12px;
-      line-height:30px;
-      background:#ddd;
-    }
-    .song-list-item {
-      height:50px;
-      font-size:0;
-      vertical-align: middle;
-      border-bottom:1px solid #ddd;
-      cursor: pointer;
-      .song-list-pic {
-        display:inline-block;
-        padding-left:10px;
-        img {
-          width: 40px;
-          height: 40px;
+        .music-li-index {
+          flex: 1;
+          display: inline-block;
+          vertical-align: top;
+          text-align: center;
         }
-      }
-      .song-list-content {
-        display:inline-block;
-        padding-left:10px;
-        .song-list-name {
-          height: 30px;
-          line-height:30px;
-          font-size:14px;
+        .music-li-img {
+          flex: 2;
+          display: inline-block;
+          img {
+            width: 40px;
+            height: 40px;
+            opacity: .8;
+          }
         }
-        .song-list-num {
-          height: 20px;
-          line-height:20px;
-          font-size:14px;
-          color:#aaa;
+        .music-li-name {
+          flex: 8;
+          display: inline-block;
+          vertical-align: top;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .music-li-singer {
+          flex: 8;
+          display: inline-block;
+          vertical-align: top;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
       }
     }
