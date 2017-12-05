@@ -71,8 +71,9 @@
             i(class="fa fa-info")
             span 关于
           i(class="split-border")
-        div(class="user-footer",@click="get()")
-          span(class="text") 退出登录
+        transition(name="side-fade")
+          div(class="user-footer",@click="get()",v-show="sideStatus")
+            span(class="text") 退出登录
 </template>
 
 <script>
@@ -140,7 +141,7 @@
       top: 0;
       left: 0;
       bottom: 0;
-      width: 300px;
+      width: 280px;
       z-index: 11;
       background: #fff;
       overflow-y: auto;
@@ -148,7 +149,7 @@
         transition:all .3s ease;
       }
       &.side-fade-enter, &.side-fade-leave-to {
-        left: -300px
+        left: -280px
       }
       .user-header-info{
         display:flex;
@@ -249,11 +250,17 @@
         }
       }
       .user-footer{
+        &.side-fade-enter-active, &.side-fade-leave-active {
+          transition:all .3s ease;
+        }
+        &.side-fade-enter, &.side-fade-leave-to {
+          left: -280px
+        }
         position:fixed;
         left:0;
         bottom:0;
         z-index:1;
-        width:300px;
+        width:280px;
         height:40px;
         line-height:40px;
         text-align:center;
