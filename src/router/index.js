@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Home from '@/components/Home'
-import Detail from '@/components/Detail'
+import home from '@/components/home'
+import detail from '@/components/detail'
 import map from '@/components/map'
 Vue.use(Router)
 export default new Router({
@@ -9,12 +9,12 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: home
     },
     {
       path: '/detail',
       name: 'detail',
-      component: Detail
+      component: detail
     },
     {
       path: '/others',
