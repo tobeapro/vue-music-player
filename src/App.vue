@@ -32,7 +32,7 @@
 
 <script>
   import header from '@/components/header'
-  import sidebar from '@/components/Sidebar'
+  import sidebar from '@/components/sidebar'
   import bottombar from '@/components/bottombar'
   import musicList from '@/components/musicList'
   import musicDetail from '@/components/musicDetail'
