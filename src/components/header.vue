@@ -57,7 +57,7 @@
                   })
                 })
                 this.$store.dispatch('search_music', this.searchList)
-                this.$router.push({path: '/'})
+                this.$router.push({path: '/detail'})
               }
             })
           .catch((res) => {
