@@ -8,14 +8,18 @@
     <div class="tab">
       <div class="tab-item">
         <router-link to="/">
-          <span>首页</span>
+          <i class="fa fa-pagelines" aria-hidden="true"></i>首页
         </router-link>
       </div>
       <div class="tab-item">
-        <router-link to="/detail">详情</router-link>
+        <router-link to="/detail">
+          <i class="fa fa-paper-plane-o" aria-hidden="true"></i>详情
+        </router-link>
       </div>
       <div class="tab-item">
-        <router-link to="/others">其他</router-link>
+        <router-link to="/others">
+          <i class="fa fa-map-marker" aria-hidden="true"></i>其他
+        </router-link>
       </div>
     </div>
     <router-view></router-view>
@@ -183,9 +187,11 @@ input[disabled], select[disabled]{
   display:inline-block;
   width:100%;
   color:#000;
-  letter-spacing: 2px;
   border-bottom:2px solid transparent;
   transition:border-color .4s;
+}
+.app .tab-item a .fa{
+  margin-right:6px;
 }
 .app .tab-item a.router-link-exact-active{
   color:indianred;
