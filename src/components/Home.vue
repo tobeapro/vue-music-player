@@ -108,11 +108,11 @@
           justify-content: center;
           a {
             display:inline-block;
-            padding:0 10px;
             width:100%;
+            height:220px;
             img {
               width: 100%;
-              height: 160px;
+              height: 220px;
             }
           }
         }
@@ -120,6 +120,11 @@
       .swiper-pagination-bullet{
         width:12px;
         height:12px;
+        background:#fff;
+        opacity:1;
+        &.swiper-pagination-bullet-active{
+          background:#007aff;
+        }
       }
     }
     .song-lists{
