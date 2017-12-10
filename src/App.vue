@@ -12,13 +12,13 @@
         </router-link>
       </div>
       <div class="tab-item">
-        <router-link to="/detail">
-          <i class="fa fa-paper-plane-o" aria-hidden="true"></i>详情
+        <router-link to="/rank">
+          <i class="fa fa-paper-plane-o" aria-hidden="true"></i>排行榜
         </router-link>
       </div>
       <div class="tab-item">
-        <router-link to="/others">
-          <i class="fa fa-map-marker" aria-hidden="true"></i>其他
+        <router-link to="/search">
+          <i class="fa fa-headphones" aria-hidden="true"></i>搜索
         </router-link>
       </div>
     </div>
