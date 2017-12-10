@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import home from '@/components/home'
-import detail from '@/components/detail'
-import map from '@/components/map'
+import rank from '@/components/rankList'
+import search from '@/components/searchbar'
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -12,14 +12,14 @@ export default new Router({
       component: home
     },
     {
-      path: '/detail',
-      name: 'detail',
-      component: detail
+      path: '/rank',
+      name: 'rankList',
+      component: rank
     },
     {
-      path: '/others',
-      name: 'others',
-      component: map
+      path: '/search',
+      name: 'searchbar',
+      component: search
     }
   ]
 })
