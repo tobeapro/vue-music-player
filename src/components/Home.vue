@@ -55,11 +55,14 @@
       }
     },
     created () {
+      this.$custom.waiting.show()
       this.$axios.get('/api/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg?g_tk=5381&uin=0&format=jsonp&inCharset=utf-8&outCharset=utf-8&notice=0&platform=h5&needNewCode=1&_=1492177982521')
         .then((res) => {
+          this.$custom.waiting.hide()
           this.dailyMusic = res.data.data.slider
         })
         .catch((res) => {
+          this.$custom.waiting.hide()
           console.log(res)
         })
       this.$axios.get('../../static/data.json')
