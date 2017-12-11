@@ -25,7 +25,7 @@
               div(class="music-durationTime") {{musicDurationTime | timeFilter}}
               div(class="music-range")
               div(class="music-played",ref="progress",:style="{width:playedWidth}")
-              div(class="music-ball",ref="ball",:style="{left:playedWidth}",@mousedown.stop="musicDown",@mousemove.stop="musicMove($event)",@mouseup.stop="musicUp",@mouseleave.stop="musicUp")
+              div(class="music-ball",ref="ball",:style="{left:playedWidth}",@mousedown.stop="musicDown",@touchstart.stop="musicDown",@mousemove.stop="musicMove($event)",@touchmove.stop="musicMove($event)",@mouseup.stop="musicUp",@mouseleave.stop="musicUp",@touchend.stop="musicUp",)
         div(class="music-switch")
           div(class="music-switch-item")
             i(class="fa",:class="[{'fa-refresh':playWay===1},{'fa-random':playWay===2}]",@click="changePlayWay")
