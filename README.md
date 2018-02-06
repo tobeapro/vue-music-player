@@ -29,3 +29,10 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 - [x] 歌曲保存本地数据库（数据库启动状态）
 - [ ] 歌词显示
 
+#### 项目预览
+
+![预览](https://tobeapro.github.io/img/vue-music1.gif)
+
+##### 由于现在音频接口被403了,听不到歌曲内容了（暂时没找到新的）
+
+![预览](https://tobeapro.github.io/img/vue-music2.gif)
