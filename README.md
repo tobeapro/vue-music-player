@@ -33,6 +33,6 @@ For detailed explanation on how things work, checkout the [guide](http://vuejs-t
 
 ![预览](https://tobeapro.github.io/img/vue-music1.gif)
 
-##### 由于现在音频接口被403了,听不到歌曲内容了（暂时没找到新的）
+##### 本来想回头补充下歌词显示，好好写个文档说明这些，可是现在音频接口被403了,听不到歌曲内容了.....（暂时没找到合适的api）
 
 ![预览](https://tobeapro.github.io/img/vue-music2.gif)
